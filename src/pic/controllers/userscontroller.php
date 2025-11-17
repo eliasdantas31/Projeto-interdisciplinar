@@ -1,8 +1,8 @@
 <?php
 
-require_once "./models/Usuario.php";
+require_once "../models/users.php";
 
-class UsuarioController {
+class UsersController {
 
     public function criar($db) {
 
