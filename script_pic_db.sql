@@ -1,8 +1,42 @@
-CREATE DATABASE IF NOT EXISTS  PICDB;
+CREATE DATABASE IF NOT EXISTS PICDB;
 USE PICDB;
 
-CREATE TABLE IF NOT EXISTS  Users(
-    id int auto_increment primary key,
-    email varchar(100) unique,
-    password varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    admin CHAR(1) DEFAULT 'N'
+);
+
+CREATE TABLE IF NOT EXISTS Category (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS CategoryItem (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    categoryId INT NOT NULL,
+    price FLOAT NOT NULL,
+    name VARCHAR(100) UNIQUE NOT NULL,
+
+
+    CONSTRAINT fk_categoryitem_category
+        FOREIGN KEY (categoryId)
+        REFERENCES Category(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS CategoryAdds (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    categoryId INT NOT NULL,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    price FLOAT NOT NULL,
+
+
+    CONSTRAINT fk_categoryitem_category
+        FOREIGN KEY (categoryId)
+        REFERENCES Category(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
