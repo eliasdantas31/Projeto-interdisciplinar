@@ -16,7 +16,22 @@ CREATE TABLE IF NOT EXISTS Category (
 CREATE TABLE IF NOT EXISTS CategoryItem (
     id INT AUTO_INCREMENT PRIMARY KEY,
     categoryId INT NOT NULL,
+    price FLOAT NOT NULL,
     name VARCHAR(100) UNIQUE NOT NULL,
+
+
+    CONSTRAINT fk_categoryitem_category
+        FOREIGN KEY (categoryId)
+        REFERENCES Category(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS CategoryAdds (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    categoryId INT NOT NULL,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    price FLOAT NOT NULL,
 
 
     CONSTRAINT fk_categoryitem_category
