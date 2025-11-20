@@ -1,0 +1,79 @@
+import styled from 'styled-components'
+import { mainTheme as theme } from '../../styles/theme'
+import LogoBaita from '../../assets/BaitaLogo.png'
+
+const { colors } = theme
+
+export const LogoContainer = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+`
+
+export const Logo = styled.div`
+  height: 75px;
+  width: 75px;
+  background-image: url(${LogoBaita});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+`
+
+export const MenuContainer = styled.div`
+  height: 100%;
+  width: 290px;
+  background-color: ${colors.red};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+`
+
+export const MenuContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+
+  & > ul {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    & > li {
+      list-style: none;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      & > button {
+        width: 80%;
+        padding: 10px 0;
+        font-size: 20px;
+        color: ${colors.white};
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        &::after {
+          content: '';
+          display: block;
+          width: 0;
+          height: 5px;
+          background: ${colors.white};
+          transition: width 0.5s;
+        }
+
+        &:hover::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+`

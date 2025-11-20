@@ -39,11 +39,13 @@ export const HeaderContent = styled.ul`
   & > li {
     list-style: none;
     margin-left: 20px;
-    & > a {
+    & > button {
       color: ${colors.white};
       font-size: 28px;
       font-family: 'Lilita One', sans-serif;
-      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
 
       &::after {
         content: '';

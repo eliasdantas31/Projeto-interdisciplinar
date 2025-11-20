@@ -1,6 +1,27 @@
+import { useNavigate } from 'react-router-dom'
 import { HeaderContainer, Logo, HeaderContent, LogoContainer } from './style'
 
 export const Header = () => {
+  const navigate = useNavigate()
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.currentTarget.id
+
+    if (target === 'pedidos') {
+      navigate('../pages/')
+    } else if (target === 'garcom') {
+      navigate('../pages')
+    } else if (target === 'cardapio') {
+      navigate('../pages/cardapioADM')
+    } else if (target === 'config') {
+      navigate('../pages/')
+    } else if (target === 'robo') {
+      navigate('../pages/')
+    } else if (target === 'relatorio') {
+      navigate('../pages/')
+    }
+  }
+
   return (
     <HeaderContainer>
       <LogoContainer>
@@ -8,22 +29,34 @@ export const Header = () => {
       </LogoContainer>
       <HeaderContent>
         <li>
-          <a href="#config">Configuração</a>
+          <button id="pedidos" onClick={handleClick}>
+            Pedidos
+          </button>
         </li>
         <li>
-          <a href="#cardapio">Cardápio</a>
+          <button id="garcom" onClick={handleClick}>
+            Garçom
+          </button>
         </li>
         <li>
-          <a href="#pedido">Pedidos</a>
+          <button id="cardapio" onClick={handleClick}>
+            Cardápio
+          </button>
         </li>
         <li>
-          <a href="#garçom">Garçom</a>
+          <button id="config" onClick={handleClick}>
+            Configuração
+          </button>
         </li>
         <li>
-          <a href="#robo">Robô</a>
+          <button id="robo" onClick={handleClick}>
+            Robô
+          </button>
         </li>
         <li>
-          <a href="#relatorio">Relatório</a>
+          <button id="relatorio" onClick={handleClick}>
+            Relatório
+          </button>
         </li>
       </HeaderContent>
     </HeaderContainer>

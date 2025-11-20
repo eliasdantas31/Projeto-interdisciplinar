@@ -86,7 +86,7 @@ export const LoginInput = styled.input`
 export const LoginButton = styled.button`
   height: 50px;
   width: 100%;
-  background-color: ${colors.yellon};
+  background-color: ${colors.yellow};
   color: ${colors.white};
   font-size: 24px;
   font-family: 'Lilita One', sans-serif;
