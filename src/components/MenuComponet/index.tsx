@@ -7,29 +7,37 @@ export const MenuComponent = () => {
   return (
     <MenuContainer>
       <LogoContainer>
-        <Logo />
+        <button onClick={() => navigate('/adm')}>
+          <Logo />
+        </button>
       </LogoContainer>
       <MenuContent>
         <ul>
           <li>
-            <button onClick={() => navigate('/adm/pedidos')}>Pedidos</button>
+            <button onClick={() => navigate('/adm/layout/pedidos')}>
+              Pedidos
+            </button>
           </li>
           <li>
-            <button onClick={() => navigate('/adm/garcom')}>Garçom</button>
+            <button onClick={() => navigate('/adm/layout/garcom')}>
+              Garçom
+            </button>
           </li>
           <li>
-            <button onClick={() => navigate('/adm/cardapio')}>Cardápio</button>
+            <button onClick={() => navigate('/adm/layout/cardapio')}>
+              Cardápio
+            </button>
           </li>
           <li>
-            <button onClick={() => navigate('/adm/config')}>
+            <button onClick={() => navigate('/adm/layout/config')}>
               Configuração
             </button>
           </li>
           <li>
-            <button onClick={() => navigate('/adm/robo')}>Robô</button>
+            <button onClick={() => alert('Em desenvolvimento')}>Robô</button>
           </li>
           <li>
-            <button onClick={() => navigate('/adm/relatorio')}>
+            <button onClick={() => alert('Em desenvolvimento')}>
               Relatório
             </button>
           </li>

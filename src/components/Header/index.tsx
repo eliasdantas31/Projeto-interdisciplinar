@@ -11,7 +11,9 @@ export const Header = ({ $variant = 'adm' }: HeaderProps) => {
   return (
     <H.HeaderContainer>
       <H.LogoContainer>
-        <H.Logo />
+        <button onClick={() => navigate('/adm')}>
+          <H.Logo />
+        </button>
       </H.LogoContainer>
       <H.HeaderContent $variant={$variant}>
         <li className="adm">
@@ -35,12 +37,12 @@ export const Header = ({ $variant = 'adm' }: HeaderProps) => {
           </button>
         </li>
         <li className="adm">
-          <button id="robo" onClick={() => navigate('/adm/robo')}>
+          <button id="robo" onClick={() => alert('Em desenvolvimento')}>
             Robô
           </button>
         </li>
         <li className="adm">
-          <button id="relatorio" onClick={() => navigate('/adm/relatorio')}>
+          <button id="relatorio" onClick={() => alert('Em desenvolvimento')}>
             Relatório
           </button>
         </li>

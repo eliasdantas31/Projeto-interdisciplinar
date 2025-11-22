@@ -8,19 +8,21 @@ import { AdmLayout } from '../pages/admLayout'
 import { AdmPedidos } from '../pages/admPedidos'
 import { AdmGarcom } from '../pages/admGarcom'
 import { AdmCardapio } from '../pages/admCardapio'
+import { AdmConfig } from '../pages/admConfig'
 
 export const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/admPage" element={<AdmPage />} key="adm" />
-      <Route path="/garcomPage" element={<GarcomPage />} />
+      <Route path="/adm" element={<AdmPage />} />
+      <Route path="/garcom" element={<GarcomPage />} />
 
-      {/* ROTAS ADM ANINHADAS */}
-      <Route path="layout" element={<AdmLayout />}>
+      {/* ROTAS ADM ANINHADAS - Layout com Menu + Footer */}
+      <Route path="/adm/layout" element={<AdmLayout />}>
         <Route path="pedidos" element={<AdmPedidos />} />
         <Route path="garcom" element={<AdmGarcom />} />
         <Route path="cardapio" element={<AdmCardapio />} />
+        <Route path="config" element={<AdmConfig />} />
         {/* outras: config, robo, relatório... */}
       </Route>
     </Routes>

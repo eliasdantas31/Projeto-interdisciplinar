@@ -23,6 +23,12 @@ export const LogoContainer = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
+
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
 `
 
 export const Logo = styled.div`

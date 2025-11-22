@@ -20,9 +20,9 @@ const Login = () => {
     e.preventDefault() // impede o refresh da página
 
     if (email === 'garcom@baita.com' && password === '1234') {
-      navigate('/garcomPage')
+      navigate('/garcom')
     } else if (email === 'admin@baita.com' && password === 'admin') {
-      navigate('/admPage')
+      navigate('/adm')
     } else {
       alert('Usuário ou senha incorretos!')
     }

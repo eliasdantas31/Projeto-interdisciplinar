@@ -14,14 +14,14 @@ export const AdmPage = () => {
         <OptionCard
           id="pedidos"
           $bgColor="red"
-          onClick={() => navigate('/adm/pedidos')}
+          onClick={() => navigate('/adm/layout/pedidos')}
         >
           <h1>PEDIDOS</h1>
         </OptionCard>
         <OptionCard
           id="garcom"
           $bgColor="yellow"
-          onClick={() => navigate('/adm/garcom')}
+          onClick={() => navigate('/adm/layout/garcom')}
         >
           <h1>GARÇOM</h1>
         </OptionCard>
@@ -29,7 +29,7 @@ export const AdmPage = () => {
           id="cardapio"
           $largura="1339px"
           $bgColor="yellow"
-          onClick={() => navigate('/adm/cardapio')}
+          onClick={() => navigate('/adm/layout/cardapio')}
         >
           <h1>CARDÁPIO</h1>
         </OptionCard>
@@ -37,21 +37,21 @@ export const AdmPage = () => {
           id="config"
           $largura="345px"
           $bgColor="red"
-          onClick={() => navigate('/adm/config')}
+          onClick={() => navigate('/adm/layout/config')}
         >
           <i className="bi bi-gear"></i>
         </OptionCard>
         <OptionCard
           id="robo"
           $bgColor="yellow"
-          onClick={() => navigate('/adm/robo')}
+          onClick={() => navigate('/adm/layout/robo')}
         >
           <h1>ROBÔ</h1>
         </OptionCard>
         <OptionCard
           id="relatorio"
           $bgColor="red"
-          onClick={() => navigate('/adm/relatorio')}
+          onClick={() => navigate('/adm/layout/relatorio')}
         >
           <h1>RELATÓRIO</h1>
         </OptionCard>
