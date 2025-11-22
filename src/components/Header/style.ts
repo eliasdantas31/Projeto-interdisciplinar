@@ -4,6 +4,10 @@ import LogoBaita from '../../assets/BaitaLogo.png'
 
 const { colors } = theme
 
+type HeaderContentProps = {
+  $variant?: 'adm' | 'garcom'
+}
+
 export const HeaderContainer = styled.header`
   height: 88px;
   width: 100%;
@@ -30,15 +34,45 @@ export const Logo = styled.div`
   background-position: center;
 `
 
-export const HeaderContent = styled.ul`
+export const HeaderContent = styled.ul<HeaderContentProps>`
   height: auto;
   width: 100%;
   display: flex;
-  justify-content: space-around;
   align-items: center;
+
+  ${({ $variant }) => {
+    switch ($variant) {
+      case 'adm':
+        return `
+        justify-content: space-around;
+
+          & > li.adm {
+            list-style: none;
+            margin-left: 20px;
+          }
+
+          & > li.garcom {
+            display: none;
+          }
+        `
+      case 'garcom':
+      default:
+        return `
+        justify-content: flex-end;
+
+          .adm {
+            display: none;
+          }
+
+          .garcom {
+            list-style: none;
+            margin-left: 20px;
+          }
+        `
+    }
+  }}
+
   & > li {
-    list-style: none;
-    margin-left: 20px;
     & > button {
       color: ${colors.white};
       font-size: 28px;

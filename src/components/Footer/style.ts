@@ -3,15 +3,32 @@ import { mainTheme as theme } from '../../styles/theme'
 
 const { colors } = theme
 
-export const FooterContainer = styled.footer`
+type FooterContainerProps = {
+  $variant?: 'default' | 'menu'
+}
+
+export const FooterContainer = styled.footer<FooterContainerProps>`
   height: 88px;
   width: 100%;
-  border-radius: 20px;
   background-color: ${colors.red};
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 26px;
+
+  ${({ $variant }) => {
+    switch ($variant) {
+      case 'menu':
+        return `
+          border-radius: 0px 20px 20px 20px;
+        `
+      case 'default':
+      default:
+        return `
+          border-radius: 20px;
+        `
+    }
+  }}
 `
 
 export const InfoContainer = styled.div`

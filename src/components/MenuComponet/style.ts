@@ -11,22 +11,25 @@ export const LogoContainer = styled.div`
 `
 
 export const Logo = styled.div`
-  height: 75px;
-  width: 75px;
+  height: 130px;
+  width: 130px;
   background-image: url(${LogoBaita});
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 50%;
+  overflow: hidden;
 `
 
 export const MenuContainer = styled.div`
   height: 100%;
-  width: 290px;
+  width: 250px;
   background-color: ${colors.red};
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
+  border-radius: 20px 20px 0 0;
 `
 
 export const MenuContent = styled.div`

@@ -22,11 +22,14 @@ export const LoginLogo = styled.div`
 `
 
 export const LogoBaita = styled.img`
-  height: 200px;
-  width: 200px;
+  height: 230px;
+  width: 230px;
   background-image: url(${BaitaLogo});
-  background-size: cover;
-  border: none;
+  background-size: cover; /* Mude para cover */
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%; /* Se o div for circular */
+  overflow: hidden; /* Para garantir que nada vaze */
 `
 
 export const LoginBackground = styled.div`

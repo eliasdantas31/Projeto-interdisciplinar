@@ -1,64 +1,55 @@
 import { useNavigate } from 'react-router-dom'
-import { HeaderContainer, Logo, HeaderContent, LogoContainer } from './style'
+import * as H from './style'
 
-export const Header = () => {
+type HeaderProps = {
+  $variant?: 'adm' | 'garcom'
+}
+
+export const Header = ({ $variant = 'adm' }: HeaderProps) => {
   const navigate = useNavigate()
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.currentTarget.id
-
-    if (target === 'pedidos') {
-      navigate('../pages/')
-    } else if (target === 'garcom') {
-      navigate('../pages')
-    } else if (target === 'cardapio') {
-      navigate('../pages/cardapioADM')
-    } else if (target === 'config') {
-      navigate('../pages/')
-    } else if (target === 'robo') {
-      navigate('../pages/')
-    } else if (target === 'relatorio') {
-      navigate('../pages/')
-    }
-  }
-
   return (
-    <HeaderContainer>
-      <LogoContainer>
-        <Logo />
-      </LogoContainer>
-      <HeaderContent>
-        <li>
-          <button id="pedidos" onClick={handleClick}>
+    <H.HeaderContainer>
+      <H.LogoContainer>
+        <H.Logo />
+      </H.LogoContainer>
+      <H.HeaderContent $variant={$variant}>
+        <li className="adm">
+          <button id="pedidos" onClick={() => navigate('/adm/pedidos')}>
             Pedidos
           </button>
         </li>
-        <li>
-          <button id="garcom" onClick={handleClick}>
+        <li className="adm">
+          <button id="garcom" onClick={() => navigate('/adm/garcom')}>
             Garçom
           </button>
         </li>
-        <li>
-          <button id="cardapio" onClick={handleClick}>
+        <li className="adm">
+          <button id="cardapio" onClick={() => navigate('/adm/cardapio')}>
             Cardápio
           </button>
         </li>
-        <li>
-          <button id="config" onClick={handleClick}>
+        <li className="adm">
+          <button id="config" onClick={() => navigate('/adm/config')}>
             Configuração
           </button>
         </li>
-        <li>
-          <button id="robo" onClick={handleClick}>
+        <li className="adm">
+          <button id="robo" onClick={() => navigate('/adm/robo')}>
             Robô
           </button>
         </li>
-        <li>
-          <button id="relatorio" onClick={handleClick}>
+        <li className="adm">
+          <button id="relatorio" onClick={() => navigate('/adm/relatorio')}>
             Relatório
           </button>
         </li>
-      </HeaderContent>
-    </HeaderContainer>
+        <li className="garcom">
+          <button id="sair" onClick={() => navigate('/')}>
+            Sair
+          </button>
+        </li>
+      </H.HeaderContent>
+    </H.HeaderContainer>
   )
 }

@@ -1,12 +1,10 @@
 import { createGlobalStyle } from 'styled-components'
 import { mainTheme as theme } from './theme'
 
+export const { colors } = theme
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const GlobalStyle = createGlobalStyle`
-  :root{
-    --lightGray: ${theme.colors.lightGray};
-  }
-
   *{
     margin: 0;
     padding: 0;
@@ -16,6 +14,6 @@ export const GlobalStyle = createGlobalStyle`
 
   html, body{
     height: 100%;
-    background-color: var(--lightGray);
+    background-color: ${colors.lightGray};
   }
 `

@@ -1,9 +1,40 @@
-import { GarcomContainer } from './style' // se não usar styled, pode remover
+import {
+  Container,
+  GarcomContainer,
+  NovoPedido,
+  TableInfo,
+  TablesContainer,
+  Table
+} from './style'
+
+import { Header } from '../../components/Header'
 
 export const GarcomPage = () => {
   return (
-    <GarcomContainer>
-      <h1>Área do Garçom</h1>
-    </GarcomContainer>
+    <Container>
+      <Header $variant="garcom" />
+      <GarcomContainer>
+        <NovoPedido>
+          <h1>Pedidos</h1>
+          <button>Novo pedido</button>
+        </NovoPedido>
+        <TableInfo>
+          <div>
+            <div className="fechada"></div>
+            <p>Ocupada</p>
+          </div>
+          <div>
+            <div className="ocupada"></div>
+            <p>Fechada</p>
+          </div>
+        </TableInfo>
+        <TablesContainer>
+          <Table>
+            <h3>Nome Mesa/pedido</h3>
+            <button>EXIBIR</button>
+          </Table>
+        </TablesContainer>
+      </GarcomContainer>
+    </Container>
   )
 }

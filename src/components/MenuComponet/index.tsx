@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom'
 import { MenuContainer, MenuContent, Logo, LogoContainer } from './style'
 
 export const MenuComponent = () => {
+  const navigate = useNavigate()
+
   return (
     <MenuContainer>
       <LogoContainer>
@@ -9,22 +12,26 @@ export const MenuComponent = () => {
       <MenuContent>
         <ul>
           <li>
-            <button>Pedidos</button>
+            <button onClick={() => navigate('/adm/pedidos')}>Pedidos</button>
           </li>
           <li>
-            <button>Garçom</button>
+            <button onClick={() => navigate('/adm/garcom')}>Garçom</button>
           </li>
           <li>
-            <button>Cardápio</button>
+            <button onClick={() => navigate('/adm/cardapio')}>Cardápio</button>
           </li>
           <li>
-            <button>Configuração</button>
+            <button onClick={() => navigate('/adm/config')}>
+              Configuração
+            </button>
           </li>
           <li>
-            <button>Robô</button>
+            <button onClick={() => navigate('/adm/robo')}>Robô</button>
           </li>
           <li>
-            <button>Relatório</button>
+            <button onClick={() => navigate('/adm/relatorio')}>
+              Relatório
+            </button>
           </li>
         </ul>
       </MenuContent>

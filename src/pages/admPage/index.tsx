@@ -6,39 +6,30 @@ import { Footer } from '../../components/Footer'
 
 export const AdmPage = () => {
   const navigate = useNavigate()
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.currentTarget.id
-
-    if (target === 'pedidos') {
-      navigate('../')
-    } else if (target === 'garcom') {
-      navigate('../')
-    } else if (target === 'cardapio') {
-      navigate('../cardapioADM')
-    } else if (target === 'config') {
-      navigate('../')
-    } else if (target === 'robo') {
-      navigate('../')
-    } else if (target === 'relatorio') {
-      navigate('../')
-    }
-  }
 
   return (
     <Container>
-      <Header />
+      <Header $variant="adm" />
       <OptionsContainer>
-        <OptionCard id="pedidos" $bgColor="red" onClick={handleClick}>
+        <OptionCard
+          id="pedidos"
+          $bgColor="red"
+          onClick={() => navigate('/adm/pedidos')}
+        >
           <h1>PEDIDOS</h1>
         </OptionCard>
-        <OptionCard id="garcom" $bgColor="yellow" onClick={handleClick}>
+        <OptionCard
+          id="garcom"
+          $bgColor="yellow"
+          onClick={() => navigate('/adm/garcom')}
+        >
           <h1>GARÇOM</h1>
         </OptionCard>
         <OptionCard
           id="cardapio"
           $largura="1339px"
           $bgColor="yellow"
-          onClick={handleClick}
+          onClick={() => navigate('/adm/cardapio')}
         >
           <h1>CARDÁPIO</h1>
         </OptionCard>
@@ -46,18 +37,26 @@ export const AdmPage = () => {
           id="config"
           $largura="345px"
           $bgColor="red"
-          onClick={handleClick}
+          onClick={() => navigate('/adm/config')}
         >
           <i className="bi bi-gear"></i>
         </OptionCard>
-        <OptionCard id="robo" $bgColor="yellow" onClick={handleClick}>
+        <OptionCard
+          id="robo"
+          $bgColor="yellow"
+          onClick={() => navigate('/adm/robo')}
+        >
           <h1>ROBÔ</h1>
         </OptionCard>
-        <OptionCard id="relatorio" $bgColor="red" onClick={handleClick}>
+        <OptionCard
+          id="relatorio"
+          $bgColor="red"
+          onClick={() => navigate('/adm/relatorio')}
+        >
           <h1>RELATÓRIO</h1>
         </OptionCard>
       </OptionsContainer>
-      <Footer />
+      <Footer $variant="default" />
     </Container>
   )
 }
