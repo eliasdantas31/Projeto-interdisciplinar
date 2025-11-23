@@ -2,7 +2,7 @@ export const mainTheme = {
   colors: {
     black: '#000',
     white: '#fff',
-    yellon: '#FFA500',
+    yellow: '#FFA500',
     red: '#BD0000',
     gray: '#BBBBBB',
     lightGray: '#E9E9E9',
