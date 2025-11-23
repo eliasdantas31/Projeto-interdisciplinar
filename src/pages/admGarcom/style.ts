@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-import styled from 'styled-components';
-=======
 import styled from 'styled-components'
 import { mainTheme as theme } from '../../styles/theme'
 
@@ -163,4 +160,3 @@ export const GarcomItem = styled.div`
     }
   }
 `
->>>>>>> branch_guilherme
