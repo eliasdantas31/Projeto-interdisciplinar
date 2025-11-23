@@ -16,13 +16,12 @@ export const Content = styled.div`
   flex: 1;
   display: flex;
   gap: 20px;
+  min-height: 0;
 `
 
 export const PageWrapper = styled.div`
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  flex: 1;
-  margin-bottom: 16px;
-  /* você pode ajustar depois para ficar igual às telas do Figma */
 `

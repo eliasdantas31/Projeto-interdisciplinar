@@ -4,12 +4,12 @@ import { mainTheme as theme } from '../../styles/theme'
 const { colors } = theme
 
 export const Container = styled.div`
-  height: 85%;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: stretch;
 `
 
 export const CardapioMenu = styled.div`
@@ -105,23 +105,100 @@ export const NewCategory = styled.button`
   border-radius: 10px;
   cursor: pointer;
 `
+
+// estilização category
+
 export const CategoryContainer = styled.div`
-  height: max-content;
+  flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: 15px;
+  margin-top: 20px;
+
+  overflow-y: auto;
+  padding-right: 8px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${colors.lightGray};
+    border-radius: 3px;
+  }
 `
 
 export const Category = styled.div`
-  height: 125px;
+  height: max-content;
+  width: 100%;
+  padding: 22px;
+  background-color: ${colors.white};
+  color: ${colors.black};
+  font-family: 'Lilita One', sans-serif;
+  border: none;
+  border-radius: 10px;
+  cursor: default;
+`
+
+export const CategoryOptions = styled.div`
+  height: max-content;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px;
+
+  div {
+    h3 {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+
+      i#addItem {
+        font-size: 20px;
+      }
+
+      i#dropDown {
+        font-size: 45px;
+        color: ${colors.yellow};
+      }
+    }
+  }
+`
+
+type ItemContainerProps = {
+  $open?: boolean
+}
+
+export const ItemContainer = styled.div<ItemContainerProps>`
+  width: 100%;
+  display: ${({ $open }) => ($open ? 'flex' : 'none')};
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+`
+
+export const Item = styled.div`
+  height: max-content;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px;
   background-color: ${colors.white};
   color: ${colors.black};
   font-family: 'Lilita One', sans-serif;
@@ -132,21 +209,26 @@ export const Category = styled.div`
   div {
     height: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: space-around;
+    align-items: center;
     h3 {
       font-size: 25px;
+      margin: 0;
+      margin-right: 20px;
+
+      .itemName,
+      .itemPrice {
+        color: ${colors.yellow};
+      }
     }
 
     button {
       background: transparent;
       border: none;
-      font-size: 20px;
       cursor: pointer;
 
       i {
-        font-size: 50px;
-        color: ${colors.yellow};
+        font-size: 25px;
       }
     }
   }

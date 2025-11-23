@@ -46,6 +46,11 @@ export const Header = ({ $variant = 'adm' }: HeaderProps) => {
             Relatório
           </button>
         </li>
+        <li className="adm">
+          <button id="sair" onClick={() => navigate('/')}>
+            Sair
+          </button>
+        </li>
         <li className="garcom">
           <button id="sair" onClick={() => navigate('/')}>
             Sair

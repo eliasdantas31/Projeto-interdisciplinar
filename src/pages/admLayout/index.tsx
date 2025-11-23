@@ -13,6 +13,7 @@ export const AdmLayout = () => {
           <Outlet />
         </PageWrapper>
       </Content>
+
       <Footer $variant="menu" />
     </Container>
   )
