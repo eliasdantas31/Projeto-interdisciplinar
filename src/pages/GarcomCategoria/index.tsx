@@ -32,7 +32,9 @@ export const GarcomCategoria = () => {
   const [itemSelecionado, setItemSelecionado] = useState<Item | null>(null)
   const [modalAberto, setModalAberto] = useState(false)
   const [categories, setCategories] = useState<Category[]>([])
-  const [itensPorCategoria, setItensPorCategoria] = useState<Record<number, Item[]>>({})
+  const [itensPorCategoria, setItensPorCategoria] = useState<
+    Record<number, Item[]>
+  >({})
 
   const opcoesEdicao = [
     '+ Adicional de queijo',
@@ -44,7 +46,9 @@ export const GarcomCategoria = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch('http://localhost/pic/public/index.php/category')
+        const res = await fetch(
+          'http://localhost/pic/public/index.php/category'
+        )
         const data: Category[] = await res.json()
         setCategories(data)
       } catch (err) {
@@ -65,10 +69,17 @@ export const GarcomCategoria = () => {
 
     if (!itensPorCategoria[cat.id]) {
       try {
-        const res = await fetch("http://localhost/pic/public/index.php/categoryItem")
+        const res = await fetch(
+          'http://localhost/pic/public/index.php/categoryItem'
+        )
         const data: Item[] = await res.json()
-        const itemsDaCategoria = data.filter(item => item.categoryId === cat.id)
-        setItensPorCategoria(prev => ({ ...prev, [cat.id]: itemsDaCategoria }))
+        const itemsDaCategoria = data.filter(
+          (item) => item.categoryId === cat.id
+        )
+        setItensPorCategoria((prev) => ({
+          ...prev,
+          [cat.id]: itemsDaCategoria
+        }))
       } catch (err) {
         console.log(err)
       }
@@ -95,7 +106,7 @@ export const GarcomCategoria = () => {
       </SearchBar>
 
       <CategoriasContainer>
-        {categories.map(cat => (
+        {categories.map((cat) => (
           <div key={cat.id} style={{ width: '100%' }}>
             <CategoriaBox onClick={() => toggleCategoria(cat)}>
               <h3>{cat.name}</h3>
@@ -106,7 +117,7 @@ export const GarcomCategoria = () => {
 
             {categoriaAberta === cat.id && (
               <PainelItens>
-                {itensPorCategoria[cat.id]?.map(item => (
+                {itensPorCategoria[cat.id]?.map((item) => (
                   <ItemLinha key={item.id}>
                     <p>{item.name}</p>
                     <button onClick={() => abrirEdicao(item)}>ADICIONAR</button>
@@ -123,10 +134,12 @@ export const GarcomCategoria = () => {
         <ModalOverlay>
           <ModalContent>
             <h2>Editando: {itemSelecionado.name}</h2>
-            {opcoesEdicao.map(op => (
+            {opcoesEdicao.map((op) => (
               <OptionButton key={op}>{op}</OptionButton>
             ))}
-            <CloseButton onClick={() => setModalAberto(false)}>Concluir</CloseButton>
+            <CloseButton onClick={() => setModalAberto(false)}>
+              Concluir
+            </CloseButton>
           </ModalContent>
         </ModalOverlay>
       )}
