@@ -65,7 +65,7 @@ export const GarcomCategoria = () => {
 
     if (!itensPorCategoria[cat.id]) {
       try {
-        const res = await fetch(`http://localhost/pic/public/index.php/categoryItem`)
+        const res = await fetch("http://localhost/pic/public/index.php/categoryItem")
         const data: Item[] = await res.json()
         const itemsDaCategoria = data.filter(item => item.categoryId === cat.id)
         setItensPorCategoria(prev => ({ ...prev, [cat.id]: itemsDaCategoria }))

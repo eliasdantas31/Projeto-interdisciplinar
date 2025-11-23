@@ -7,7 +7,9 @@ import {
   FormCard,
   InputGroup,
   GarcomList,
-  GarcomItem
+  GarcomItem,
+  ConfirmOverlay,
+  ConfirmBox
 } from './style'
 
 export const AdmGarcom = () => {
@@ -16,14 +18,30 @@ export const AdmGarcom = () => {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [garcomToDelete, setGarcomToDelete] = useState<number | null>(null)
+
   const handleAdd = () => {
-    if (!email || !senha) return alert('Preencha todos os campos!')
+    if (!email || !senha) {
+      return alert('Preencha todos os campos!')
+    }
 
     setGarcons([...garcons, { email }])
-
     setEmail('')
     setSenha('')
     setShowForm(false)
+  }
+
+  const askDelete = (index: number) => {
+    setGarcomToDelete(index)
+    setShowConfirm(true)
+  }
+
+  const confirmDelete = () => {
+    if (garcomToDelete === null) return
+    setGarcons(garcons.filter((_, i) => i !== garcomToDelete))
+    setShowConfirm(false)
+    setGarcomToDelete(null)
   }
 
   return (
@@ -74,10 +92,33 @@ export const AdmGarcom = () => {
         {garcons.map((g, index) => (
           <GarcomItem key={index}>
             <p>{g.email}</p>
-            <i className="bi bi-trash-fill"></i>
+            <i
+              className="bi bi-trash-fill"
+              onClick={() => askDelete(index)}
+            ></i>
           </GarcomItem>
         ))}
       </GarcomList>
+
+      {/* POP-UP DE CONFIRMAÇÃO */}
+      {showConfirm && (
+        <ConfirmOverlay>
+          <ConfirmBox>
+            <h3>Excluir garçom?</h3>
+            <p>Tem certeza que deseja remover este garçom?</p>
+
+            <div className="buttons">
+              <button className="cancel" onClick={() => setShowConfirm(false)}>
+                Cancelar
+              </button>
+
+              <button className="confirm" onClick={confirmDelete}>
+                Excluir
+              </button>
+            </div>
+          </ConfirmBox>
+        </ConfirmOverlay>
+      )}
     </Container>
   )
 }

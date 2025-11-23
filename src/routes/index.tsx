@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from '../pages/loginPage'
 import { AdmPage } from '../pages/admPage'
 import { GarcomPage } from '../pages/garcomPage'
-import { GarcomCategoria } from '../pages/garcomCategoria'
+import { GarcomCategoria } from '../pages/GarcomCategoria'
 
 import { AdmLayout } from '../pages/admLayout'
 import { AdmPedidos } from '../pages/admPedidos'
@@ -17,7 +17,7 @@ export const AppRoutes = () => (
       <Route path="/" element={<Login />} />
       <Route path="/adm" element={<AdmPage />} />
       <Route path="/garcom" element={<GarcomPage />} />
-      <Route path="/garcomCategoria" element={<GarcomCategoria />} />
+      <Route path="/GarcomCategoria" element={<GarcomCategoria />} />
 
       {/* ROTAS ADM ANINHADAS - Layout com Menu + Footer */}
       <Route path="/adm/layout" element={<AdmLayout />}>

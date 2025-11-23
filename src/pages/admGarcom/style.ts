@@ -6,24 +6,24 @@ const { colors } = theme
 export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
-  padding: 30px;
-
+  padding: 20px;
+  background: ${colors.lightGray};
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  align-items: center;
 `
 
 export const HeaderLine = styled.div`
-  width: 100%;
+  width: 95%;
   display: flex;
-  justify-content: space-between; /* Search left / Button right */
+  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  margin-bottom: 25px;
 `
 
 export const SearchBar = styled.div`
-  height: 50px;
-  width: 300px;
+  height: max-content;
+  width: 280px;
   display: flex;
 
   label {
@@ -33,7 +33,7 @@ export const SearchBar = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px 0px 0px 10px;
     color: ${colors.black};
     background-color: ${colors.white};
     cursor: pointer;
@@ -48,115 +48,166 @@ export const SearchBar = styled.div`
     font-family: 'Lilita One', sans-serif;
     font-size: 22px;
     border: none;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0px 10px 10px 0px;
   }
 `
 
 export const AddButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
   background: ${colors.red};
   color: ${colors.white};
-  font-size: 20px;
   font-family: 'Lilita One', sans-serif;
-  border-radius: 10px;
+  font-size: 20px;
   padding: 10px 20px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
   transition: 0.2s;
-
-  &:hover {
-    transform: scale(1.03);
-  }
 
   i {
     font-size: 22px;
   }
+
+  &:hover {
+    opacity: 0.9;
+  }
 `
 
 export const FormCard = styled.div`
-  background: ${colors.white};
-  padding: 20px;
-  border-radius: 12px;
   width: 350px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin-top: 20px;
+  padding: 20px;
+  background: ${colors.white};
+  border-radius: 15px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  margin-bottom: 25px;
 
   h3 {
-    font-family: 'Lilita One', sans-serif;
-    font-size: 26px;
+    margin-bottom: 20px;
   }
 
   button {
-    background: ${colors.green};
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background: ${colors.red};
     color: ${colors.white};
     border: none;
-    padding: 12px;
-    font-size: 20px;
     border-radius: 10px;
+    font-size: 18px;
     cursor: pointer;
-
-    &:hover {
-      transform: scale(1.03);
-    }
   }
 `
 
 export const InputGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 15px;
 
   label {
-    font-size: 18px;
-    font-family: 'Lilita One', sans-serif;
+    font-weight: bold;
   }
 
   input {
-    height: 45px;
-    background: ${colors.lightGray};
-    border: none;
-    padding: 0 10px;
-    font-size: 18px;
-    border-radius: 8px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid ${colors.gray};
+    font-size: 16px;
+    margin-top: 5px;
   }
 `
 
 export const GarcomList = styled.div`
-  margin-top: 40px;
-  width: 350px;
+  width: 95%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  align-items: center; /* centraliza lista */
+  gap: 15px;
+  margin-top: 10px;
 `
 
 export const GarcomItem = styled.div`
-  height: 60px;
   background: ${colors.white};
-  border-radius: 10px;
-  padding: 0 15px;
-  width: 100%;
-
+  padding: 15px 20px;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 
-  font-size: 20px;
-  font-family: 'Lilita One', sans-serif;
+  p {
+    font-size: 18px;
+    color: ${colors.black};
+  }
 
   i {
-    font-size: 24px;
+    font-size: 22px;
+    color: ${colors.red};
     cursor: pointer;
     transition: 0.2s;
-    color: ${colors.red};
 
     &:hover {
-      transform: scale(1.2);
+      opacity: 0.7;
     }
+  }
+`
+
+export const ConfirmOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const ConfirmBox = styled.div`
+  width: 320px;
+  padding: 25px;
+  background: ${colors.white};
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.3);
+
+  h3 {
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin-bottom: 25px;
+    color: ${colors.black};
+    font-size: 16px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cancel {
+    width: 45%;
+    background: ${colors.gray};
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    color: ${colors.black};
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .confirm {
+    width: 45%;
+    background: ${colors.red};
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    color: ${colors.white};
+    cursor: pointer;
+    font-size: 16px;
   }
 `
