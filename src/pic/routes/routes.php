@@ -67,6 +67,13 @@ if (strpos($route, '/users/show/') === 0 && $method === 'GET') {
     exit;
 }
 
+if (strpos($route, '/users/delete/') === 0 && $method === 'DELETE') {
+    $id = intval(str_replace('/users/delete/', '', $route));
+    $userController->delete($id);
+    exit;
+}
+
+
 
 // ===========================================================
 // CATEGORY

@@ -2,7 +2,7 @@
 
 class Database
 {
-    private $host = "localhost";
+    private $host = "127.0.0.1";
     private $db_name = "picdb";   // Nome DO SEU BANCO
     private $username = "root";   // Usuário padrão do XAMPP
     private $password = "";       // Senha vazia no XAMPP
@@ -27,6 +27,7 @@ class Database
             echo json_encode([
                 "message" => "Erro de conexão: " . $exception->getMessage()
             ]);
+            exit;
         }
 
         return $this->conn;

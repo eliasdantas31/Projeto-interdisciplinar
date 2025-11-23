@@ -58,7 +58,15 @@ class UserController
 
         if ($this->user->create()) {
             http_response_code(201);
-            echo json_encode(["message" => "Usuário criado com sucesso"]);
+            $id = $this->db->lastInsertId();
+            $this->user->id = $id;
+
+            echo json_encode([
+                "message" => "Usuario criado com sucesso!",
+                "id" => $id,
+                "email" => $this->user->email,
+                "password" => $this->user->password
+            ]);
         } else {
             http_response_code(500);
             echo json_encode(["message" => "Erro ao criar usuário"]);
@@ -130,6 +138,8 @@ class UserController
             echo json_encode(["message" => "E-mail ou senha inválidos"]);
             return;
         }
+
+        ob_clean();
 
         echo json_encode([
             "message" => "Login realizado com sucesso",
