@@ -76,9 +76,12 @@ export const AdmGarcom = () => {
   const confirmDelete = () => {
     if (garcomToDelete === null) return
 
-    fetch(`http://localhost/pic/public/index.php/users/delete/${garcomToDelete}`, {
-      method: 'DELETE'
-    })
+    fetch(
+      `http://localhost/pic/public/index.php/users/delete/${garcomToDelete}`,
+      {
+        method: 'DELETE'
+      }
+    )
       .then((res) => {
         if (!res.ok) throw new Error('Erro ao excluir garçom')
         setUser((prev) => prev.filter((u) => u.id !== garcomToDelete))

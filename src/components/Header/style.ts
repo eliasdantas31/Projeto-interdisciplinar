@@ -8,7 +8,11 @@ type HeaderContentProps = {
   $variant?: 'adm' | 'garcom'
 }
 
-export const HeaderContainer = styled.header`
+type HeaderLogoProps = {
+  $variant?: 'adm' | 'garcom'
+}
+
+export const HeaderContainer = styled.header<HeaderLogoProps>`
   height: 88px;
   width: 100%;
   border-radius: 20px;
@@ -17,11 +21,43 @@ export const HeaderContainer = styled.header`
   grid-template-columns: 1fr 1fr;
   align-items: center;
   padding: 0 26px;
+
+  ${({ $variant }) => {
+    switch ($variant) {
+      case 'adm':
+        return `
+          .admLogo {
+            display: flex;
+          }
+          .garcomLogo {
+            display: none;
+          }
+        `
+      case 'garcom':
+        return `
+          .admLogo {
+            display: none;
+          }
+          .garcomLogo {
+            display: flex;
+          }
+        `
+      default:
+        return `
+          .admLogo {
+            display: flex;
+          }
+          .garcomLogo {
+            display: none;
+          }
+        `
+    }
+  }}
 `
 
 export const LogoContainer = styled.div`
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 
   button {
@@ -50,7 +86,7 @@ export const HeaderContent = styled.ul<HeaderContentProps>`
     switch ($variant) {
       case 'adm':
         return `
-        justify-content: space-around;
+          justify-content: space-around;
 
           & > li.adm {
             list-style: none;
@@ -62,9 +98,8 @@ export const HeaderContent = styled.ul<HeaderContentProps>`
           }
         `
       case 'garcom':
-      default:
         return `
-        justify-content: flex-end;
+          justify-content: flex-end;
 
           .adm {
             display: none;
@@ -73,6 +108,19 @@ export const HeaderContent = styled.ul<HeaderContentProps>`
           .garcom {
             list-style: none;
             margin-left: 20px;
+          }
+        `
+      default:
+        return `
+          justify-content: space-around;
+
+          & > li.adm {
+            list-style: none;
+            margin-left: 20px;
+          }
+
+          & > li.garcom {
+            display: none;
           }
         `
     }

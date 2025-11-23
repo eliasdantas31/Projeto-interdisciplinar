@@ -26,34 +26,35 @@ const Login = () => {
     //garcom@garcom.com / garcom123
 
     try {
-      const response = await fetch("http://localhost/pic/public/index.php/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        'http://localhost/pic/public/index.php/users/login',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        }
+      )
 
-      const result = await response.json();
-      console.log("Console.log result", result);
+      const result = await response.json()
+      console.log('Console.log result', result)
 
       if (!result.user) {
-      setError(result.message || "Usuário ou senha incorretos");
-      return;
+        setError(result.message || 'Usuário ou senha incorretos')
+        return
       }
 
-    
-      localStorage.setItem("user", JSON.stringify(result.user));
+      localStorage.setItem('user', JSON.stringify(result.user))
 
-      if (result.user.admin === "Y") {
-        navigate("/adm");
+      if (result.user.admin === 'Y') {
+        navigate('/adm')
       } else {
-        navigate("/garcom");
+        navigate('/garcom')
       }
-
     } catch (err) {
-      console.error(err);
-      setError("Erro ao conectar com o servidor");
+      console.error(err)
+      setError('Erro ao conectar com o servidor')
     }
-  };
+  }
 
   return (
     <LoginBackground>
