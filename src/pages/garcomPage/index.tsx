@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom'
 
 import { Header } from '../../components/Header'
 
-=======
->>>>>>> branch_elias2
 import {
   Container,
   GarcomContainer,
@@ -14,7 +11,6 @@ import {
   Table
 } from './style'
 
-<<<<<<< HEAD
 export const GarcomPage = () => {
   const navigate = useNavigate()
 
@@ -22,11 +18,6 @@ export const GarcomPage = () => {
     navigate('/garcomCategoria')
   }
 
-=======
-import { Header } from '../../components/Header'
-
-export const GarcomPage = () => {
->>>>>>> branch_elias2
   return (
     <Container>
       <Header $variant="garcom" />
@@ -35,10 +26,7 @@ export const GarcomPage = () => {
           <h1>Pedidos</h1>
           <button>Novo pedido</button>
         </NovoPedido>
-<<<<<<< HEAD
 
-=======
->>>>>>> branch_elias2
         <TableInfo>
           <div>
             <div className="fechada"></div>
@@ -49,26 +37,16 @@ export const GarcomPage = () => {
             <p>Fechada</p>
           </div>
         </TableInfo>
-<<<<<<< HEAD
 
         <TablesContainer>
           <Table>
             <h3>Mesa 01</h3>
             <button onClick={handleExibir}>EXIBIR</button>
-=======
-        <TablesContainer>
-          <Table>
-            <h3>Nome Mesa/pedido</h3>
-            <button>EXIBIR</button>
->>>>>>> branch_elias2
           </Table>
         </TablesContainer>
       </GarcomContainer>
     </Container>
   )
 }
-<<<<<<< HEAD
 
 export default GarcomPage
-=======
->>>>>>> branch_elias2
