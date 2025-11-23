@@ -1,27 +1,63 @@
 <?php
 
+// ==== CORS ====
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Credentials: true");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+$method = $_SERVER['REQUEST_METHOD']; // <-- FALTAVA AQUI !!!
+
+// ==== IMPORTS ====
 require_once __DIR__ . '/../controllers/usersController.php';
 require_once __DIR__ . '/../controllers/categoryController.php';
 require_once __DIR__ . '/../controllers/categoryItemController.php';
 require_once __DIR__ . '/../controllers/categoryAddController.php';
 require_once __DIR__ . '/../config/database.php';
 
+// ==== DB ====
 $database = new Database();
 $db = $database->getConnection();
 
-$request = $_SERVER['REQUEST_URI'];
-$basePath = '/pic/public/index.php';
-$route = str_replace($basePath, '', $request);
-$method = $_SERVER['REQUEST_METHOD'];
+// ==== URL ====
+$request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+$route = $request;
+$route = str_replace('/pic/public/index.php', '', $route);
+$route = str_replace('/pic/public', '', $route);
+$route = str_replace('/index.php', '', $route);
+
+$route = '/' . ltrim($route, '/');
+
+
+// ==== CONTROLLERS ====
 $userController = new UserController($db);
 $categoryController = new CategoryController($db);
 $categoryItemController = new CategoryItemController($db);
 $categoryAddController = new CategoryAddsController($db);
 
-/* USERS */
+
+// ===========================================================
+// USERS
+// ===========================================================
+
 if ($route === '/users' && $method === 'GET') {
     $userController->index();
+    exit;
+}
+
+if ($route === '/users/create' && $method === 'POST') {
+    $userController->create();
+    exit;
+}
+
+if ($route === '/users/login' && $method === 'POST') {
+    $userController->login();
     exit;
 }
 
@@ -31,51 +67,54 @@ if (strpos($route, '/users/show/') === 0 && $method === 'GET') {
     exit;
 }
 
-if (strpos($route, '/users/create') === 0 && $method === 'POST') {
-    $userController->create();
-    exit;
-}
 
-if (strpos($route, '/users/login') === 0 && $method === 'POST') {
-    $userController->login();
-    exit;
-}
+// ===========================================================
+// CATEGORY
+// ===========================================================
 
-
-/* CATEGORY */
-if (strpos($route, '/category/create') === 0 && $method === 'POST') {
+if ($route === '/category/create' && $method === 'POST') {
     $categoryController->create();
     exit;
 }
 
-if (strpos($route, '/category') === 0 && $method === 'GET') {
+if ($route === '/category' && $method === 'GET') {
     $categoryController->index();
     exit;
 }
 
 
-/* CATEGORY ITEM */
-if (strpos($route, '/categoryItem/create') === 0 && $method === 'POST') {
+// ===========================================================
+// CATEGORY ITEM
+// ===========================================================
+
+if ($route === '/categoryItem/create' && $method === 'POST') {
     $categoryItemController->create();
     exit;
 }
 
-if (strpos($route, '/categoryItem') === 0 && $method === 'GET') {
+if ($route === '/categoryItem' && $method === 'GET') {
     $categoryItemController->index();
     exit;
 }
 
 
-/* CATEGORY ADDS */
-if (strpos($route, '/categoryAdds/create') === 0 && $method === 'POST') {
+// ===========================================================
+// CATEGORY ADDS
+// ===========================================================
+
+if ($route === '/categoryAdds/create' && $method === 'POST') {
     $categoryAddController->create();
     exit;
 }
 
-if (strpos($route, '/categoryAdds') === 0 && $method === 'GET') {
+if ($route === '/categoryAdds' && $method === 'GET') {
     $categoryAddController->index();
     exit;
 }
 
+
+// ===========================================================
+// 404
+// ===========================================================
 http_response_code(404);
 echo json_encode(["message" => "Rota não encontrada"]);

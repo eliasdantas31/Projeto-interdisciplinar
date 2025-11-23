@@ -15,18 +15,48 @@ const Login = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault() // impede o refresh da página
 
-    if (email === 'garcom@baita.com' && password === '1234') {
-      navigate('/garcom')
-    } else if (email === 'admin@baita.com' && password === 'admin') {
-      navigate('/adm')
-    } else {
-      alert('Usuário ou senha incorretos!')
+    //if (email === 'garcom@baita.com' && password === '1234') {
+    //  navigate('/garcom')
+    //} else if (email === 'admin@baita.com' && password === 'admin') {
+    //  navigate('/adm')
+    //} else {
+    //  alert('Usuário ou senha incorretos!')
+    //}
+
+    try {
+      const response = await fetch("http://localhost/pic/public/index.php/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const result = await response.json();
+      console.log("Console.log result", result);
+
+      if (!result.user) {
+      setError(result.message || "Usuário ou senha incorretos");
+      return;
+      }
+
+    
+      localStorage.setItem("user", JSON.stringify(result.user));
+
+      if (result.user.admin === "Y") {
+        navigate("/adm");
+      } else {
+        navigate("/garcom");
+      }
+
+    } catch (err) {
+      console.error(err);
+      setError("Erro ao conectar com o servidor");
     }
-  }
+  };
 
   return (
     <LoginBackground>
@@ -36,7 +66,6 @@ const Login = () => {
         </LoginLogo>
 
         <h1>Bem-vindo ao BaitaKão</h1>
-
         {/* importante: usar onSubmit e o botão type="submit" */}
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">E-mail:</label>
@@ -66,3 +95,7 @@ const Login = () => {
 }
 
 export default Login
+function setError(message: any) {
+  throw new Error('Function not implemented.')
+}
+
