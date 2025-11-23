@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import styled from 'styled-components'
 import { mainTheme as theme } from '../../styles/theme'
 
@@ -211,3 +212,6 @@ export const ConfirmBox = styled.div`
     font-size: 16px;
   }
 `
+=======
+import styled from 'styled-components';
+>>>>>>> branch_elias2
