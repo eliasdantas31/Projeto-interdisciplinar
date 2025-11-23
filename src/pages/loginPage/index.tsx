@@ -92,7 +92,3 @@ const Login = () => {
 }
 
 export default Login
-function setError(message: any) {
-  throw new Error('Function not implemented.')
-}
-

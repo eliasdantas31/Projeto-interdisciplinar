@@ -1,3 +1,7 @@
+import { useNavigate } from 'react-router-dom'
+
+import { Header } from '../../components/Header'
+
 import {
   Container,
   GarcomContainer,
@@ -7,9 +11,13 @@ import {
   Table
 } from './style'
 
-import { Header } from '../../components/Header'
-
 export const GarcomPage = () => {
+  const navigate = useNavigate()
+
+  const handleExibir = () => {
+    navigate('/garcomCategoria')
+  }
+
   return (
     <Container>
       <Header $variant="garcom" />
@@ -18,6 +26,7 @@ export const GarcomPage = () => {
           <h1>Pedidos</h1>
           <button>Novo pedido</button>
         </NovoPedido>
+
         <TableInfo>
           <div>
             <div className="fechada"></div>
@@ -28,13 +37,16 @@ export const GarcomPage = () => {
             <p>Fechada</p>
           </div>
         </TableInfo>
+
         <TablesContainer>
           <Table>
-            <h3>Nome Mesa/pedido</h3>
-            <button>EXIBIR</button>
+            <h3>Mesa 01</h3>
+            <button onClick={handleExibir}>EXIBIR</button>
           </Table>
         </TablesContainer>
       </GarcomContainer>
     </Container>
   )
 }
+
+export default GarcomPage
