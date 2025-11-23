@@ -76,7 +76,7 @@ export const AdmGarcom = () => {
   const confirmDelete = () => {
     if (garcomToDelete === null) return
 
-    fetch(`http://localhost/pic/public/index.php/users/${garcomToDelete}`, {
+    fetch(`http://localhost/pic/public/index.php/users/delete/${garcomToDelete}`, {
       method: 'DELETE'
     })
       .then((res) => {
