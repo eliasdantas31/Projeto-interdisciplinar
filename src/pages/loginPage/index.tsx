@@ -20,13 +20,10 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault() // impede o refresh da página
 
-    //if (email === 'garcom@baita.com' && password === '1234') {
-    //  navigate('/garcom')
-    //} else if (email === 'admin@baita.com' && password === 'admin') {
-    //  navigate('/adm')
-    //} else {
-    //  alert('Usuário ou senha incorretos!')
-    //}
+    //usuario teste admin
+    //admin@admin.com / admin123
+    //usuario teste garcom
+    //garcom@garcom.com / garcom123
 
     try {
       const response = await fetch("http://localhost/pic/public/index.php/users/login", {
