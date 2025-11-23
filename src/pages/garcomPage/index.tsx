@@ -16,8 +16,7 @@ export const GarcomPage = () => {
 
   const handleExibir = () => {
   navigate('/garcomCategoria')
-  };
-
+  }
 
   return (
     <Container>

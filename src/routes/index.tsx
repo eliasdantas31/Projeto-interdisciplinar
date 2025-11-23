@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from '../pages/loginPage'
 import { AdmPage } from '../pages/admPage'
 import { GarcomPage } from '../pages/garcomPage'
-import GarcomCategoria from '../pages/garcomCategoria'
+import { GarcomCategoria } from '../pages/garcomCategoria'
 
 import { AdmLayout } from '../pages/admLayout'
 import { AdmPedidos } from '../pages/admPedidos'
