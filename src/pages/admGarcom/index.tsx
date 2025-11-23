@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Container,
   HeaderLine,
@@ -7,23 +7,88 @@ import {
   FormCard,
   InputGroup,
   GarcomList,
-  GarcomItem
+  GarcomItem,
+  ConfirmOverlay,
+  ConfirmBox
 } from './style'
+
+interface User {
+  id: number
+  email: string
+  password: string
+}
 
 export const AdmGarcom = () => {
   const [showForm, setShowForm] = useState(false)
   const [garcons, setGarcons] = useState<{ email: string }[]>([])
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
+  const [user, setUser] = useState<User[]>([])
+
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [garcomToDelete, setGarcomToDelete] = useState<number | null>(null)
 
   const handleAdd = () => {
-    if (!email || !senha) return alert('Preencha todos os campos!')
+    if (!email || !senha) {
+      return alert('Preencha todos os campos!')
+    }
 
-    setGarcons([...garcons, { email }])
+    fetch('http://localhost/pic/public/index.php/users/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: senha })
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Erro ao adicionar garçom')
+        return res.json()
+      })
+      .then((novoUser: User) => {
+        setUser((prev) => [...prev, novoUser])
+        setEmail('')
+        setSenha('')
+        setShowForm(false)
+      })
+      .catch((err) => {
+        console.log(err)
+        alert('Erro ao adicionar garçom')
+      })
+  }
 
-    setEmail('')
-    setSenha('')
-    setShowForm(false)
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch('http://localhost/pic/public/index.php/users')
+        const data: User[] = await res.json()
+        setUser(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    fetchUsers()
+  }, [])
+
+  const askDelete = (index: number) => {
+    setGarcomToDelete(index)
+    setShowConfirm(true)
+  }
+
+  const confirmDelete = () => {
+    if (garcomToDelete === null) return
+
+    fetch(`http://localhost/pic/public/index.php/users/${garcomToDelete}`, {
+      method: 'DELETE'
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Erro ao excluir garçom')
+        setUser((prev) => prev.filter((u) => u.id !== garcomToDelete))
+        setShowConfirm(false)
+        setGarcomToDelete(null)
+      })
+      .catch((err) => {
+        console.log(err)
+        alert('Erro ao excluir garçom')
+      })
   }
 
   return (
@@ -71,13 +136,36 @@ export const AdmGarcom = () => {
       )}
 
       <GarcomList>
-        {garcons.map((g, index) => (
-          <GarcomItem key={index}>
-            <p>{g.email}</p>
-            <i className="bi bi-trash-fill"></i>
+        {user.map((user) => (
+          <GarcomItem key={user.id}>
+            <p>{user.email}</p>
+            <i
+              className="bi bi-trash-fill"
+              onClick={() => askDelete(user.id)}
+            ></i>
           </GarcomItem>
         ))}
       </GarcomList>
+
+      {/* POP-UP DE CONFIRMAÇÃO */}
+      {showConfirm && (
+        <ConfirmOverlay>
+          <ConfirmBox>
+            <h3>Excluir garçom?</h3>
+            <p>Tem certeza que deseja remover este garçom?</p>
+
+            <div className="buttons">
+              <button className="cancel" onClick={() => setShowConfirm(false)}>
+                Cancelar
+              </button>
+
+              <button className="confirm" onClick={confirmDelete}>
+                Excluir
+              </button>
+            </div>
+          </ConfirmBox>
+        </ConfirmOverlay>
+      )}
     </Container>
   )
 }

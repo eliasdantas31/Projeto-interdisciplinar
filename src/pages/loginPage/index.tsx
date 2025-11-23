@@ -15,7 +15,6 @@ const Login = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-<<<<<<< HEAD
   const [error, setError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,20 +54,6 @@ const Login = () => {
       setError("Erro ao conectar com o servidor");
     }
   };
-=======
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault() // impede o refresh da página
-
-    if (email === 'garcom@baita.com' && password === '1234') {
-      navigate('/garcom')
-    } else if (email === 'admin@baita.com' && password === 'admin') {
-      navigate('/adm')
-    } else {
-      alert('Usuário ou senha incorretos!')
-    }
-  }
->>>>>>> branch_guilherme
 
   return (
     <LoginBackground>
@@ -78,10 +63,6 @@ const Login = () => {
         </LoginLogo>
 
         <h1>Bem-vindo ao BaitaKão</h1>
-<<<<<<< HEAD
-=======
-
->>>>>>> branch_guilherme
         {/* importante: usar onSubmit e o botão type="submit" */}
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">E-mail:</label>
@@ -111,10 +92,3 @@ const Login = () => {
 }
 
 export default Login
-<<<<<<< HEAD
-function setError(message: any) {
-  throw new Error('Function not implemented.')
-}
-
-=======
->>>>>>> branch_guilherme
