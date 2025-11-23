@@ -116,3 +116,5 @@ export const GarcomCategoria = () => {
     </Container>
   )
 }
+
+export default GarcomCategoria
