@@ -139,5 +139,7 @@ class UserController
                 "admin" => $user["admin"]
             ]
         ]);
+
+        exit;
     }
 }
