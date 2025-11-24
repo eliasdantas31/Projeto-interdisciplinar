@@ -107,7 +107,6 @@ export const NewCategory = styled.button`
 `
 
 // estilização category
-
 export const CategoryContainer = styled.div`
   flex: 1;
   width: 100%;
@@ -233,10 +232,15 @@ export const CategoryOptions = styled.div`
       margin-bottom: 10px;
     }
 
+    .addItem {
+      margin: 0;
+    }
+
     button {
       background: transparent;
       border: none;
-      font-size: 20px;
+      margin-left: 20px;
+      font-size: 25px;
       cursor: pointer;
 
       i#addItem {
@@ -251,6 +255,7 @@ export const CategoryOptions = styled.div`
   }
 `
 
+// estilização item
 type ItemContainerProps = {
   $open?: boolean
 }
@@ -284,10 +289,11 @@ export const Item = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
+    gap: 30px;
+
     h3 {
       font-size: 25px;
       margin: 0;
-      margin-right: 20px;
 
       .itemName,
       .itemPrice {
@@ -301,7 +307,8 @@ export const Item = styled.div`
       cursor: pointer;
 
       i {
-        font-size: 25px;
+        font-size: 24px;
+        color: ${colors.red};
       }
     }
   }

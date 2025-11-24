@@ -195,11 +195,15 @@ export const AdmCardapio = () => {
                     setSelectedCategoryId(cat.id)
                     setShowItem(true)
                   }}
+                  className="addItem"
                 >
                   <i className="bi bi-plus-circle"></i> Adicionar item
                 </button>
               </div>
               <div>
+                <button>
+                  <i className="bi bi-trash"></i>
+                </button>
                 <button onClick={() => toggleCategory(cat.id)}>
                   <i
                     className={
@@ -224,11 +228,11 @@ export const AdmCardapio = () => {
                       <span className="itemPrice">Valor: </span>
                       <span>R${item.price.toFixed(2)}</span>
                     </h3>
+                  </div>
+                  <div>
                     <button onClick={() => abrirEdicao(item)}>
                       <i className="bi bi-pencil-square"></i>
                     </button>
-                  </div>
-                  <div>
                     <button>
                       <i className="bi bi-trash"></i>
                     </button>
@@ -272,63 +276,71 @@ export const AdmCardapio = () => {
 
       {/* novo item */}
       {showItem && (
-        <div>
-          <h3>Criar novo item</h3>
-          <input
-            type="text"
-            placeholder="Nome do item"
-            value={newItemName}
-            onChange={(e) => setNewItemName(e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="Preço do item"
-            value={newItemPrice}
-            onChange={(e) => setNewItemPrice(e.target.value)}
-          />
-          <button onClick={handleCreateItem}>Criar</button>
-          <button
-            onClick={() => {
-              setShowItem(false)
-              setSelectedCategoryId(null)
-            }}
-          >
-            Cancelar
-          </button>
-        </div>
+        <CategoryPopUpContainer>
+          <CategoryPopUpContent>
+            <h3>Criar novo item</h3>
+            <input
+              type="text"
+              placeholder="Nome do item"
+              value={newItemName}
+              onChange={(e) => setNewItemName(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Preço do item"
+              value={newItemPrice}
+              onChange={(e) => setNewItemPrice(e.target.value)}
+            />
+            <div>
+              <button onClick={handleCreateItem}>Criar</button>
+              <button
+                onClick={() => {
+                  setShowItem(false)
+                  setSelectedCategoryId(null)
+                }}
+              >
+                Cancelar
+              </button>
+            </div>
+          </CategoryPopUpContent>
+        </CategoryPopUpContainer>
       )}
 
       {/* edição de item */}
       {editItem && (
-        <div>
-          <h3>Editar item</h3>
-          <input
-            type="text"
-            value={editItemName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setEditItemName(e.target.value)
-            }
-            placeholder="Nome do item"
-          />
-          <input
-            type="number"
-            value={editItemPrice}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setEditItemPrice(e.target.value)
-            }
-            placeholder="Preço do item"
-          />
-          <button onClick={salvarEdicao}>Salvar</button>
-          <button
-            onClick={() => {
-              setEditItem(null)
-              setEditItemName('')
-              setEditItemPrice('')
-            }}
-          >
-            Cancelar
-          </button>
-        </div>
+        <CategoryPopUpContainer>
+          <CategoryPopUpContent>
+            <h3>Editar item</h3>
+            <input
+              type="text"
+              value={editItemName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEditItemName(e.target.value)
+              }
+              placeholder="Nome do item"
+            />
+            <input
+              type="number"
+              value={editItemPrice}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEditItemPrice(e.target.value)
+              }
+              placeholder="Preço do item"
+            />
+            <div>
+              <button onClick={salvarEdicao}>Salvar</button>
+              <button
+                onClick={() => {
+                  setEditItem(null)
+                  setEditItemName('')
+                  setEditItemPrice('')
+                }}
+              >
+                Cancelar
+              </button>
+            </div>
+          </CategoryPopUpContent>
+        </CategoryPopUpContainer>
       )}
     </Container>
   )
