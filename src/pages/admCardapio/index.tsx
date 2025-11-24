@@ -64,6 +64,7 @@ export const AdmCardapio = () => {
           items: cat.items || [],
           adds: cat.adds || []
         }))
+        console.log("CATEGORIAS NORMALIZADAS:", normalized)
         setCategories(normalized)
       })
       .catch((err) => console.error(err))
@@ -122,8 +123,8 @@ export const AdmCardapio = () => {
       .catch((err) => console.error(err))
   }
 
-  const abrirEdicao = (item: ItemType) => {
-    setEditItem(item)
+  const abrirEdicao = (item: ItemType, categoryId: number) => {
+    setEditItem({ ...item, categoryId })
     setEditItemName(item.name)
     setEditItemPrice(item.price.toString())
   }
@@ -143,7 +144,7 @@ export const AdmCardapio = () => {
         body: JSON.stringify({
           categoryId: editItem.categoryId,
           name: editItemName,
-          price
+          price: price
         })
       }
     )
@@ -157,6 +158,46 @@ export const AdmCardapio = () => {
       })
       .catch((err) => console.error(err))
   }
+
+  const deletarCategoria = async (categoryId: number) => {
+  try {
+    const response = await fetch(`http://localhost/pic/public/index.php/category/delete/${categoryId}`, {
+      method: "DELETE"
+    })
+
+    if (!response.ok) {
+      throw new Error("Erro ao deletar categoria")
+    }
+
+    setCategories(prev => prev.filter(cat => cat.id !== categoryId))
+  } catch (err) {
+    console.error("Erro ao apagar categoria:", err)
+  }
+}
+
+const deletarItem = async (itemId: number, categoryId: number) => {
+  try {
+    const response = await fetch(`http://localhost/pic/public/index.php/categoryItem/delete/${itemId}`, {
+      method: "DELETE"
+    })
+
+    if (!response.ok) {
+      throw new Error("Erro ao deletar item")
+    }
+
+    setCategories(prev =>
+      prev.map(cat =>
+        cat.id === categoryId
+          ? { ...cat, items: cat.items.filter(item => item.id !== itemId) }
+          : cat
+      )
+    )
+  } catch (err) {
+    console.error("Erro ao apagar item:", err)
+  }
+}
+
+
 
   return (
     <Container>
@@ -202,7 +243,7 @@ export const AdmCardapio = () => {
               </div>
               <div>
                 <button>
-                  <i className="bi bi-trash"></i>
+                  <i className="bi bi-trash" onClick={() => deletarCategoria(cat.id)}></i>
                 </button>
                 <button onClick={() => toggleCategory(cat.id)}>
                   <i
@@ -230,11 +271,12 @@ export const AdmCardapio = () => {
                     </h3>
                   </div>
                   <div>
-                    <button onClick={() => abrirEdicao(item)}>
+                    <button onClick={() => abrirEdicao(item, cat.id)}>
                       <i className="bi bi-pencil-square"></i>
                     </button>
                     <button>
-                      <i className="bi bi-trash"></i>
+                      <i className="bi bi-trash" onClick={() => deletarItem(item.id, cat.id)}></i>
+
                     </button>
                   </div>
                 </Item>

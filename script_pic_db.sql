@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS Orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tableId INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('open','closed', 'finished') DEFAULT 'open',
 
     CONSTRAINT fk_orders_table
         FOREIGN KEY (tableId)
