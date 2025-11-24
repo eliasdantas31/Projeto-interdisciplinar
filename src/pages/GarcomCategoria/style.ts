@@ -9,45 +9,70 @@ export const Container = styled.div`
   padding: 15px;
 `
 
-export const TopButtons = styled.div`
+export const GarcomMenu = styled.div`
+  height: 60px;
   width: 100%;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 10px;
   margin-top: 10px;
 
   button {
-    flex: 1;
-    height: 45px;
+    height: 100%;
     border: none;
     font-family: 'Lilita One', sans-serif;
-    font-size: 22px;
+    font-size: 40px;
+    font-weight: normal;
     border-radius: 10px;
     cursor: pointer;
     color: ${colors.white};
   }
 
   .pedido {
-    background: ${colors.red};
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 40px;
+    background-color: ${colors.red};
+    border-radius: 20px 0px 0px 20px;
+
+    @media screen and (max-width: 1024px) {
+      font-size: 35px;
+    }
+
+    @media screen and (max-width: 768px) {
+      padding-left: 20px;
+      font-size: 25px;
+    }
   }
 
   .finalizar {
-    background: ${colors.yellow};
+    width: 60%;
+    background-color: ${colors.yellow};
+    border-radius: 0px 20px 20px 0px;
+
+    @media screen and (max-width: 1024px) {
+      font-size: 35px;
+    }
+
+    @media screen and (max-width: 768px) {
+      font-size: 25px;
+    }
   }
 `
 
 export const SearchBar = styled.div`
   width: 100%;
   display: flex;
-  background: ${colors.white};
+  background-color: ${colors.white};
+  color: ${colors.black};
   border-radius: 10px;
   margin-top: 15px;
   padding: 8px 12px;
   align-items: center;
   gap: 10px;
-
-  .icon {
-    font-size: 20px;
-  }
 
   input {
     width: 100%;

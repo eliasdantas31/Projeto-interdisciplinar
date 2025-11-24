@@ -37,21 +37,21 @@ export const AdmPage = () => {
           id="config"
           $largura="345px"
           $bgColor="red"
-          onClick={() => navigate('/adm/layout/config')}
+          onClick={() => alert('Em desenvolvimento')}
         >
           <i className="bi bi-gear"></i>
         </OptionCard>
         <OptionCard
           id="robo"
           $bgColor="yellow"
-          onClick={() => navigate('/adm/layout/robo')}
+          onClick={() => alert('Em desenvolvimento')}
         >
           <h1>ROBÔ</h1>
         </OptionCard>
         <OptionCard
           id="relatorio"
           $bgColor="red"
-          onClick={() => navigate('/adm/layout/relatorio')}
+          onClick={() => alert('Em desenvolvimento')}
         >
           <h1>RELATÓRIO</h1>
         </OptionCard>

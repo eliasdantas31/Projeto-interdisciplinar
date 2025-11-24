@@ -9,12 +9,21 @@ export const Header = ({ $variant = 'adm' }: HeaderProps) => {
   const navigate = useNavigate()
 
   return (
-    <H.HeaderContainer>
-      <H.LogoContainer>
+    <H.HeaderContainer $variant={$variant}>
+      {/* Logo ADM */}
+      <H.LogoContainer className="admLogo">
         <button onClick={() => navigate('/adm')}>
           <H.Logo />
         </button>
       </H.LogoContainer>
+
+      {/* Logo Garçom */}
+      <H.LogoContainer className="garcomLogo">
+        <button onClick={() => navigate('/garcom')}>
+          <H.Logo />
+        </button>
+      </H.LogoContainer>
+
       <H.HeaderContent $variant={$variant}>
         <li className="adm">
           <button id="pedidos" onClick={() => navigate('/adm/pedidos')}>
@@ -32,7 +41,7 @@ export const Header = ({ $variant = 'adm' }: HeaderProps) => {
           </button>
         </li>
         <li className="adm">
-          <button id="config" onClick={() => navigate('/adm/config')}>
+          <button id="config" onClick={() => alert('Em desenvolvimento')}>
             Configuração
           </button>
         </li>

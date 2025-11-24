@@ -20,13 +20,17 @@ interface User {
 
 export const AdmGarcom = () => {
   const [showForm, setShowForm] = useState(false)
-  const [garcons, setGarcons] = useState<{ email: string }[]>([])
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [garcons, setGarcons] = useState<{ email: string }[]>([]) // (ainda não usado)
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [user, setUser] = useState<User[]>([])
 
   const [showConfirm, setShowConfirm] = useState(false)
   const [garcomToDelete, setGarcomToDelete] = useState<number | null>(null)
+
+  // estado da barra de pesquisa
+  const [search, setSearch] = useState('')
 
   const handleAdd = () => {
     if (!email || !senha) {
@@ -94,6 +98,11 @@ export const AdmGarcom = () => {
       })
   }
 
+  // lista filtrada pela searchbar
+  const filteredUsers = user.filter((u) =>
+    u.email.toLowerCase().includes(search.toLowerCase().trim())
+  )
+
   return (
     <Container>
       <HeaderLine>
@@ -101,7 +110,13 @@ export const AdmGarcom = () => {
           <label htmlFor="pesquisar">
             <i className="bi bi-search"></i>
           </label>
-          <input type="text" id="pesquisar" placeholder="Pesquisar garçom..." />
+          <input
+            type="text"
+            id="pesquisar"
+            placeholder="Pesquisar"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </SearchBar>
 
         <AddButton onClick={() => setShowForm(!showForm)}>
@@ -139,7 +154,7 @@ export const AdmGarcom = () => {
       )}
 
       <GarcomList>
-        {user.map((user) => (
+        {filteredUsers.map((user) => (
           <GarcomItem key={user.id}>
             <p>{user.email}</p>
             <i

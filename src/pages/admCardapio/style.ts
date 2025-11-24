@@ -22,13 +22,13 @@ export const CardapioMenu = styled.div`
 
   div {
     display: flex;
-    gap: 20px;
+    gap: 10px;
   }
 `
 
 export const SearchBar = styled.div`
   height: max-content;
-  width: 300px;
+  width: 255px;
   display: flex;
 
   label {

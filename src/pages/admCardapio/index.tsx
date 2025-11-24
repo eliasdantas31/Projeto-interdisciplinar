@@ -162,7 +162,7 @@ export const AdmCardapio = () => {
         <div>
           <CardapioOptions>
             <button>
-              Cardápio Online
+              Cardápio Local
               <i className="bi bi-caret-down-fill"></i>
             </button>
             <div>

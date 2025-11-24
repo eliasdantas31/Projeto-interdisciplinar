@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react'
 import { Header } from '../../components/Header'
 
 import {
   Container,
-  TopButtons,
   SearchBar,
   CategoriaBox,
   CategoriasContainer,
@@ -12,9 +12,9 @@ import {
   ModalOverlay,
   ModalContent,
   OptionButton,
-  CloseButton
+  CloseButton,
+  GarcomMenu
 } from './style'
-import { NovoPedido } from '../garcomPage/style'
 
 interface Item {
   id: number
@@ -82,13 +82,13 @@ export const GarcomCategoria = () => {
     <Container>
       <Header $variant="garcom" />
 
-      <NovoPedido>
+      <GarcomMenu>
         <button className="pedido">Ver Pedido Atual</button>
         <button className="finalizar">Finalizar</button>
-      </NovoPedido>
+      </GarcomMenu>
 
       <SearchBar>
-        <div className="icon">🔍</div>
+        <i className="bi bi-search"></i>
         <input placeholder="Pesquisar" />
       </SearchBar>
 
