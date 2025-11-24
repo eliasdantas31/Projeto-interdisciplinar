@@ -29,7 +29,7 @@ export const MenuComponent = () => {
             </button>
           </li>
           <li>
-            <button onClick={() => navigate('/adm/layout/config')}>
+            <button onClick={() => alert('Em desenvolvimento')}>
               Configuração
             </button>
           </li>
@@ -40,6 +40,9 @@ export const MenuComponent = () => {
             <button onClick={() => alert('Em desenvolvimento')}>
               Relatório
             </button>
+          </li>
+          <li>
+            <button onClick={() => navigate('/')}>Sair</button>
           </li>
         </ul>
       </MenuContent>

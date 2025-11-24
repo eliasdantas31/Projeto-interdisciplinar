@@ -41,7 +41,7 @@ export const Header = ({ $variant = 'adm' }: HeaderProps) => {
           </button>
         </li>
         <li className="adm">
-          <button id="config" onClick={() => navigate('/adm/config')}>
+          <button id="config" onClick={() => alert('Em desenvolvimento')}>
             Configuração
           </button>
         </li>
