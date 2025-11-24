@@ -26,17 +26,20 @@ export const Header = ({ $variant = 'adm' }: HeaderProps) => {
 
       <H.HeaderContent $variant={$variant}>
         <li className="adm">
-          <button id="pedidos" onClick={() => navigate('/adm/pedidos')}>
+          <button id="pedidos" onClick={() => navigate('/adm/layout/pedidos')}>
             Pedidos
           </button>
         </li>
         <li className="adm">
-          <button id="garcom" onClick={() => navigate('/adm/garcom')}>
+          <button id="garcom" onClick={() => navigate('/adm/layout/garcom')}>
             Garçom
           </button>
         </li>
         <li className="adm">
-          <button id="cardapio" onClick={() => navigate('/adm/cardapio')}>
+          <button
+            id="cardapio"
+            onClick={() => navigate('/adm/layout/cardapio')}
+          >
             Cardápio
           </button>
         </li>
