@@ -14,14 +14,15 @@ class CategoryController
         $this->category = new Category($db);
     }
 
+    
     public function index()
     {
         $stmt = $this->category->getAll();
         $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         echo json_encode($categories);
     }
 
+    
     public function show($id)
     {
         $this->category->id = $id;
@@ -35,11 +36,12 @@ class CategoryController
         }
     }
 
+    
     public function create()
     {
         $data = json_decode(file_get_contents("php://input"));
 
-        if (!isset($data->name) || empty($data->name)) {
+        if (!isset($data->name) || empty(trim($data->name))) {
             http_response_code(400);
             echo json_encode(["message" => "Nome da categoria é obrigatório"]);
             return;
@@ -56,11 +58,12 @@ class CategoryController
         }
     }
 
+    
     public function update($id)
     {
         $data = json_decode(file_get_contents("php://input"));
 
-        if (!isset($data->name)) {
+        if (!isset($data->name) || empty(trim($data->name))) {
             http_response_code(400);
             echo json_encode(["message" => "Campo 'name' é obrigatório"]);
             return;
@@ -77,6 +80,7 @@ class CategoryController
         }
     }
 
+   
     public function delete($id)
     {
         $this->category->id = $id;
@@ -88,4 +92,32 @@ class CategoryController
             echo json_encode(["message" => "Erro ao remover categoria"]);
         }
     }
+
+   
+    public function menu()
+{
+    $stmt = $this->category->getAll();
+    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $result = [];
+
+    foreach ($categories as $cat) {
+        $this->category->id = $cat['id'];
+
+        $itemsStmt = $this->category->getItems();
+        $items = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $addsStmt = $this->category->getAdds();
+        $adds = $addsStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result[] = [
+            'id' => $cat['id'],
+            'name' => $cat['name'],
+            'items' => $items ?? [], 
+            'adds' => $adds ?? []    
+        ];
+    }
+
+    echo json_encode($result);
+}
 }

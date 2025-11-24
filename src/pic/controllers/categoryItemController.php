@@ -14,14 +14,15 @@ class CategoryItemController
         $this->categoryItem = new CategoryItem($db);
     }
 
+    
     public function index()
     {
         $stmt = $this->categoryItem->getAll();
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         echo json_encode($items);
     }
 
+    
     public function show($id)
     {
         $this->categoryItem->id = $id;
@@ -35,18 +36,20 @@ class CategoryItemController
         }
     }
 
+   
     public function create()
     {
         $data = json_decode(file_get_contents("php://input"));
 
-        if (!isset($data->categoryId) || !isset($data->name)) {
+        if (!isset($data->categoryId) || !isset($data->name) || !isset($data->price)) {
             http_response_code(400);
-            echo json_encode(["message" => "Campos 'categoryId' e 'name' são obrigatórios"]);
+            echo json_encode(["message" => "categoryId, name e price são obrigatórios"]);
             return;
         }
 
         $this->categoryItem->categoryId = $data->categoryId;
         $this->categoryItem->name = $data->name;
+        $this->categoryItem->price = $data->price;
 
         if ($this->categoryItem->create()) {
             http_response_code(201);
@@ -57,19 +60,21 @@ class CategoryItemController
         }
     }
 
+   
     public function update($id)
     {
         $data = json_decode(file_get_contents("php://input"));
 
-        if (!isset($data->categoryId) || !isset($data->name)) {
+        if (!isset($data->categoryId) || !isset($data->name) || !isset($data->price)) {
             http_response_code(400);
-            echo json_encode(["message" => "Campos 'categoryId' e 'name' são obrigatórios"]);
+            echo json_encode(["message" => "categoryId, name e price são obrigatórios"]);
             return;
         }
 
         $this->categoryItem->id = $id;
         $this->categoryItem->categoryId = $data->categoryId;
         $this->categoryItem->name = $data->name;
+        $this->categoryItem->price = $data->price;
 
         if ($this->categoryItem->update()) {
             echo json_encode(["message" => "Item atualizado com sucesso"]);
@@ -79,6 +84,7 @@ class CategoryItemController
         }
     }
 
+    
     public function delete($id)
     {
         $this->categoryItem->id = $id;

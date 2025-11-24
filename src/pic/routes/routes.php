@@ -89,6 +89,11 @@ if ($route === '/category' && $method === 'GET') {
     exit;
 }
 
+if ($route === '/category/menu' && $method === 'GET') {
+    $categoryController->menu();
+    exit;
+}
+
 
 // ===========================================================
 // CATEGORY ITEM
@@ -104,6 +109,23 @@ if ($route === '/categoryItem' && $method === 'GET') {
     exit;
 }
 
+if (strpos($route, '/categoryItem/update/') === 0 && $method === 'PUT') {
+    $id = intval(str_replace('/categoryItem/update/', '', $route));
+    $categoryItemController->update($id);
+    exit;
+}
+
+if (strpos($route, '/categoryItem/delete/') === 0 && $method === 'DELETE') {
+    $id = intval(str_replace('/categoryItem/delete/', '', $route));
+    $categoryItemController->delete($id);
+    exit;
+}
+
+if (strpos($route, '/categoryItem/show/') === 0 && $method === 'GET') {
+    $id = intval(str_replace('/categoryItem/show/', '', $route));
+    $categoryItemController->show($id);
+    exit;
+}
 
 // ===========================================================
 // CATEGORY ADDS
