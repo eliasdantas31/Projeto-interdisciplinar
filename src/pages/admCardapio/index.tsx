@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   CardapioMenu,
   CardapioOptions,
@@ -12,13 +12,142 @@ import {
   Item
 } from './style'
 
-export const AdmCardapio = () => {
-  const [openCategories, setOpenCategories] = useState<number[]>([])
+interface ItemType {
+  id: number
+  name: string
+  price: number
+  categoryId: number
+}
 
-  function toggleCategory(index: number) {
+interface AddType {
+  id: number
+  name: string
+  price: number
+}
+
+interface CategoryType {
+  id: number
+  name: string
+  items: ItemType[]
+  adds: AddType[]
+}
+
+export const AdmCardapio = () => {
+  const [categories, setCategories] = useState<CategoryType[]>([])
+  const [openCategories, setOpenCategories] = useState<number[]>([])
+  const [showCategory, setShowCategory] = useState(false)
+  const [newCategoryName, setNewCategoryName] = useState('')
+
+  const [showItem, setShowItem] = useState(false)
+  const [newItemName, setNewItemName] = useState('')
+  const [newItemPrice, setNewItemPrice] = useState('')
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
+
+  const [editItem, setEditItem] = useState<ItemType | null>(null)
+  const [editItemName, setEditItemName] = useState('')
+  const [editItemPrice, setEditItemPrice] = useState('')
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
+
+  const fetchCategories = () => {
+    fetch('http://localhost/pic/public/index.php/category/menu')
+      .then((res) => res.json())
+      .then((data) => {
+        const normalized = data.map((cat: any) => ({
+          ...cat,
+          items: cat.items || [],
+          adds: cat.adds || []
+        }))
+        setCategories(normalized)
+      })
+      .catch((err) => console.error(err))
+  }
+
+  const toggleCategory = (id: number) => {
     setOpenCategories((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     )
+  }
+
+  const handleCreateCategory = () => {
+    if (!newCategoryName.trim()) return alert('Nome é obrigatório')
+
+    fetch('http://localhost/pic/public/index.php/category/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: newCategoryName })
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert(data.message)
+        setShowCategory(false)
+        setNewCategoryName('')
+        fetchCategories()
+      })
+      .catch((err) => console.error(err))
+  }
+
+  const handleCreateItem = () => {
+    if (!newItemName.trim() || !newItemPrice.trim()) return alert('Nome e preço são obrigatórios')
+    if (!selectedCategoryId) return
+
+    const price = parseFloat(newItemPrice)
+    if (isNaN(price)) return alert('Preço inválido')
+
+    fetch('http://localhost/pic/public/index.php/categoryItem/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        categoryId: selectedCategoryId,
+        name: newItemName,
+        price
+      })
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert(data.message)
+        setShowItem(false)
+        setNewItemName('')
+        setNewItemPrice('')
+        setSelectedCategoryId(null)
+        fetchCategories()
+      })
+      .catch((err) => console.error(err))
+  }
+
+  const abrirEdicao = (item: ItemType) => {
+    setEditItem(item)
+    setEditItemName(item.name)
+    setEditItemPrice(item.price.toString())
+  }
+
+  const salvarEdicao = () => {
+    if (!editItem || !editItemName.trim() || !editItemPrice.trim())
+      return alert('Nome e preço obrigatórios')
+
+    const price = parseFloat(editItemPrice)
+    if (isNaN(price)) return alert('Preço inválido')
+
+    fetch(`http://localhost/pic/public/index.php/categoryItem/update/${editItem.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        categoryId: editItem.categoryId,
+        name: editItemName,
+        price
+      })
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert(data.message)
+        setEditItem(null)
+        setEditItemName('')
+        setEditItemPrice('')
+        fetchCategories()
+      })
+      .catch((err) => console.error(err))
   }
 
   return (
@@ -37,274 +166,147 @@ export const AdmCardapio = () => {
               <i className="bi bi-caret-down-fill"></i>
             </button>
             <div>
-              <button id="cOnline">Cardapio Online</button>
-              <button id="cLocal">Cardapio Local</button>
+              <button id="cOnline">Cardápio Online</button>
+              <button id="cLocal">Cardápio Local</button>
             </div>
           </CardapioOptions>
-          <NewCategory>Nova Categoria</NewCategory>
+          <NewCategory onClick={() => setShowCategory(true)}>Nova Categoria</NewCategory>
         </div>
       </CardapioMenu>
 
       <CategoryContainer>
-        <Category>
-          <CategoryOptions>
-            <div>
-              <h3>Lanches</h3>
-              <button>
-                <i className="bi bi-plus-circle" id="addItem"></i> Adicionar
-                item
-              </button>
-            </div>
-            <div>
-              <button onClick={() => toggleCategory(0)}>
-                <i
-                  className={
-                    openCategories.includes(0)
-                      ? 'bi bi-caret-up-fill'
-                      : 'bi bi-caret-down-fill'
-                  }
-                  id="dropDown"
-                ></i>
-              </button>
-            </div>
-          </CategoryOptions>
+        {categories.map((cat) => (
+          <Category key={cat.id}>
+            <CategoryOptions>
+              <div>
+                <h3>{cat.name}</h3>
+                <button
+                  onClick={() => {
+                    setSelectedCategoryId(cat.id)
+                    setShowItem(true)
+                  }}
+                >
+                  <i className="bi bi-plus-circle"></i> Adicionar item
+                </button>
+              </div>
+              <div>
+                <button onClick={() => toggleCategory(cat.id)}>
+                  <i
+                    className={openCategories.includes(cat.id) ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}
+                  ></i>
+                </button>
+              </div>
+            </CategoryOptions>
 
-          <ItemContainer $open={openCategories.includes(0)}>
-            <Item>
-              <div>
-                <h3>
-                  <span className="itemName">Nome: </span>
-                  <span>X-Egg</span>
-                </h3>
-                <h3>
-                  <span className="itemPrice">Valor: </span>
-                  <span>R$32,90</span>
-                </h3>
-                <button>
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </div>
-              <div>
-                <button>
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </Item>
-            <Item>
-              <div>
-                <h3>
-                  <span className="itemName">Nome: </span>
-                  <span>X-Bacon</span>
-                </h3>
-                <h3>
-                  <span className="itemPrice">Valor: </span>
-                  <span>R$32,90</span>
-                </h3>
-                <button>
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </div>
-              <div>
-                <button>
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </Item>
-            <Item>
-              <div>
-                <h3>
-                  <span className="itemName">Nome: </span>
-                  <span>X-Salada</span>
-                </h3>
-                <h3>
-                  <span className="itemPrice">Valor: </span>
-                  <span>R$32,90</span>
-                </h3>
-                <button>
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </div>
-              <div>
-                <button>
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </Item>
-          </ItemContainer>
-        </Category>
-        <Category>
-          <CategoryOptions>
-            <div>
-              <h3>Lanches</h3>
-              <button>
-                <i className="bi bi-plus-circle" id="addItem"></i> Adicionar
-                item
-              </button>
-            </div>
-            <div>
-              <button onClick={() => toggleCategory(1)}>
-                <i
-                  className={
-                    openCategories.includes(1)
-                      ? 'bi bi-caret-up-fill'
-                      : 'bi bi-caret-down-fill'
-                  }
-                  id="dropDown"
-                ></i>
-              </button>
-            </div>
-          </CategoryOptions>
-
-          <ItemContainer $open={openCategories.includes(1)}>
-            <Item>
-              <div>
-                <h3>
-                  <span className="itemName">Nome: </span>
-                  <span>X-Egg</span>
-                </h3>
-                <h3>
-                  <span className="itemPrice">Valor: </span>
-                  <span>R$32,90</span>
-                </h3>
-                <button>
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </div>
-              <div>
-                <button>
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </Item>
-            <Item>
-              <div>
-                <h3>
-                  <span className="itemName">Nome: </span>
-                  <span>X-Bacon</span>
-                </h3>
-                <h3>
-                  <span className="itemPrice">Valor: </span>
-                  <span>R$32,90</span>
-                </h3>
-                <button>
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </div>
-              <div>
-                <button>
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </Item>
-            <Item>
-              <div>
-                <h3>
-                  <span className="itemName">Nome: </span>
-                  <span>X-Salada</span>
-                </h3>
-                <h3>
-                  <span className="itemPrice">Valor: </span>
-                  <span>R$32,90</span>
-                </h3>
-                <button>
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </div>
-              <div>
-                <button>
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </Item>
-          </ItemContainer>
-        </Category>
-        <Category>
-          <CategoryOptions>
-            <div>
-              <h3>Lanches</h3>
-              <button>
-                <i className="bi bi-plus-circle" id="addItem"></i> Adicionar
-                item
-              </button>
-            </div>
-            <div>
-              <button onClick={() => toggleCategory(1)}>
-                <i
-                  className={
-                    openCategories.includes(1)
-                      ? 'bi bi-caret-up-fill'
-                      : 'bi bi-caret-down-fill'
-                  }
-                  id="dropDown"
-                ></i>
-              </button>
-            </div>
-          </CategoryOptions>
-
-          <ItemContainer $open={openCategories.includes(1)}>
-            <Item>
-              <div>
-                <h3>
-                  <span className="itemName">Nome: </span>
-                  <span>X-Egg</span>
-                </h3>
-                <h3>
-                  <span className="itemPrice">Valor: </span>
-                  <span>R$32,90</span>
-                </h3>
-                <button>
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </div>
-              <div>
-                <button>
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </Item>
-            <Item>
-              <div>
-                <h3>
-                  <span className="itemName">Nome: </span>
-                  <span>X-Bacon</span>
-                </h3>
-                <h3>
-                  <span className="itemPrice">Valor: </span>
-                  <span>R$32,90</span>
-                </h3>
-                <button>
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </div>
-              <div>
-                <button>
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </Item>
-            <Item>
-              <div>
-                <h3>
-                  <span className="itemName">Nome: </span>
-                  <span>X-Salada</span>
-                </h3>
-                <h3>
-                  <span className="itemPrice">Valor: </span>
-                  <span>R$32,90</span>
-                </h3>
-                <button>
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </div>
-              <div>
-                <button>
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </Item>
-          </ItemContainer>
-        </Category>
+            <ItemContainer $open={openCategories.includes(cat.id)}>
+              {cat.items.map((item) => (
+                <Item key={item.id}>
+                  <div>
+                    <h3>
+                      <span className="itemName">Nome: </span>
+                      <span>{item.name}</span>
+                    </h3>
+                    <h3>
+                      <span className="itemPrice">Valor: </span>
+                      <span>R${item.price.toFixed(2)}</span>
+                    </h3>
+                    <button onClick={() => abrirEdicao(item)}>
+                      <i className="bi bi-pencil-square"></i>
+                    </button>
+                  </div>
+                  <div>
+                    <button>
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </Item>
+              ))}
+              {cat.adds.length > 0 && (
+                <div>
+                  <strong>Adicionais:</strong>
+                  {cat.adds.map((add) => (
+                    <div key={add.id}>
+                      {add.name} - R${add.price.toFixed(2)}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </ItemContainer>
+          </Category>
+        ))}
       </CategoryContainer>
+
+      {/* nova categoria */}
+      {showCategory && (
+        <div>
+          <h3>Criar nova categoria</h3>
+          <input
+            type="text"
+            placeholder="Nome da categoria"
+            value={newCategoryName}
+            onChange={(e) => setNewCategoryName(e.target.value)}
+          />
+          <button onClick={handleCreateCategory}>Criar</button>
+          <button onClick={() => setShowCategory(false)}>Cancelar</button>
+        </div>
+      )}
+
+      {/* novo item */}
+      {showItem && (
+        <div>
+          <h3>Criar novo item</h3>
+          <input
+            type="text"
+            placeholder="Nome do item"
+            value={newItemName}
+            onChange={(e) => setNewItemName(e.target.value)}
+          />
+          <input
+            type="number"
+            placeholder="Preço do item"
+            value={newItemPrice}
+            onChange={(e) => setNewItemPrice(e.target.value)}
+          />
+          <button onClick={handleCreateItem}>Criar</button>
+          <button
+            onClick={() => {
+              setShowItem(false)
+              setSelectedCategoryId(null)
+            }}
+          >
+            Cancelar
+          </button>
+        </div>
+      )}
+
+      {/* edição de item */}
+      {editItem && (
+        <div>
+          <h3>Editar item</h3>
+          <input
+            type="text"
+            value={editItemName}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditItemName(e.target.value)}
+            placeholder="Nome do item"
+          />
+          <input
+            type="number"
+            value={editItemPrice}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditItemPrice(e.target.value)}
+            placeholder="Preço do item"
+          />
+          <button onClick={salvarEdicao}>Salvar</button>
+          <button
+            onClick={() => {
+              setEditItem(null)
+              setEditItemName('')
+              setEditItemPrice('')
+            }}
+          >
+            Cancelar
+          </button>
+        </div>
+      )}
     </Container>
   )
 }

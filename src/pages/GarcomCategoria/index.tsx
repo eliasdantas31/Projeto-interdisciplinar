@@ -16,15 +16,23 @@ import {
 } from './style'
 import { NovoPedido } from '../garcomPage/style'
 
-interface Category {
-  id: number
-  name: string
-}
-
 interface Item {
   id: number
   name: string
-  categoryId: number
+  price: number
+}
+
+interface Add {
+  id: number
+  name: string
+  price: number
+}
+
+interface Category {
+  id: number
+  name: string
+  items: Item[]
+  adds: Add[]
 }
 
 export const GarcomCategoria = () => {
@@ -32,9 +40,6 @@ export const GarcomCategoria = () => {
   const [itemSelecionado, setItemSelecionado] = useState<Item | null>(null)
   const [modalAberto, setModalAberto] = useState(false)
   const [categories, setCategories] = useState<Category[]>([])
-  const [itensPorCategoria, setItensPorCategoria] = useState<
-    Record<number, Item[]>
-  >({})
 
   const opcoesEdicao = [
     '+ Adicional de queijo',
@@ -47,10 +52,15 @@ export const GarcomCategoria = () => {
     const fetchCategories = async () => {
       try {
         const res = await fetch(
-          'http://localhost/pic/public/index.php/category'
+          'http://localhost/pic/public/index.php/category/menu'
         )
         const data: Category[] = await res.json()
-        setCategories(data)
+        const normalized = data.map((cat) => ({
+          ...cat,
+          items: cat.items || [],
+          adds: cat.adds || []
+        }))
+        setCategories(normalized)
       } catch (err) {
         console.log(err)
       }
@@ -59,31 +69,8 @@ export const GarcomCategoria = () => {
     fetchCategories()
   }, [])
 
-  const toggleCategoria = async (cat: Category) => {
-    if (categoriaAberta === cat.id) {
-      setCategoriaAberta(null)
-      return
-    }
-
-    setCategoriaAberta(cat.id)
-
-    if (!itensPorCategoria[cat.id]) {
-      try {
-        const res = await fetch(
-          'http://localhost/pic/public/index.php/categoryItem'
-        )
-        const data: Item[] = await res.json()
-        const itemsDaCategoria = data.filter(
-          (item) => item.categoryId === cat.id
-        )
-        setItensPorCategoria((prev) => ({
-          ...prev,
-          [cat.id]: itemsDaCategoria
-        }))
-      } catch (err) {
-        console.log(err)
-      }
-    }
+  const toggleCategoria = (catId: number) => {
+    setCategoriaAberta((prev) => (prev === catId ? null : catId))
   }
 
   const abrirEdicao = (item: Item) => {
@@ -108,7 +95,7 @@ export const GarcomCategoria = () => {
       <CategoriasContainer>
         {categories.map((cat) => (
           <div key={cat.id} style={{ width: '100%' }}>
-            <CategoriaBox onClick={() => toggleCategoria(cat)}>
+            <CategoriaBox onClick={() => toggleCategoria(cat.id)}>
               <h3>{cat.name}</h3>
               <span style={{ fontSize: '24px' }}>
                 {categoriaAberta === cat.id ? '▲' : '▼'}
@@ -117,12 +104,24 @@ export const GarcomCategoria = () => {
 
             {categoriaAberta === cat.id && (
               <PainelItens>
-                {itensPorCategoria[cat.id]?.map((item) => (
+                {cat.items.map((item) => (
                   <ItemLinha key={item.id}>
                     <p>{item.name}</p>
+                    <p>R${item.price.toFixed(2)}</p>
                     <button onClick={() => abrirEdicao(item)}>ADICIONAR</button>
                   </ItemLinha>
                 ))}
+
+                {cat.adds.length > 0 && (
+                  <div>
+                    <strong>Adicionais:</strong>
+                    {cat.adds.map((add) => (
+                      <div key={add.id}>
+                        {add.name} - R${add.price.toFixed(2)}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </PainelItens>
             )}
           </div>
