@@ -101,7 +101,7 @@ export const AdmGarcom = () => {
           <label htmlFor="pesquisar">
             <i className="bi bi-search"></i>
           </label>
-          <input type="text" id="pesquisar" placeholder="Pesquisar garçom..." />
+          <input type="text" id="pesquisar" placeholder="Pesquisar" />
         </SearchBar>
 
         <AddButton onClick={() => setShowForm(!showForm)}>

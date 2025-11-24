@@ -6,7 +6,7 @@ const { colors } = theme
 export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
-  padding: 20px;
+  /* padding: 20px; */
   background: ${colors.lightGray};
   display: flex;
   flex-direction: column;
@@ -14,17 +14,18 @@ export const Container = styled.div`
 `
 
 export const HeaderLine = styled.div`
-  width: 95%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin: 15px 0;
 `
 
 export const SearchBar = styled.div`
   height: max-content;
-  width: 280px;
+  width: 255px;
   display: flex;
+  gap: 10px;
 
   label {
     height: 50px;
@@ -46,13 +47,14 @@ export const SearchBar = styled.div`
     background-color: ${colors.white};
     color: ${colors.black};
     font-family: 'Lilita One', sans-serif;
-    font-size: 22px;
+    font-size: 24px;
     border: none;
     border-radius: 0px 10px 10px 0px;
   }
 `
 
 export const AddButton = styled.button`
+  width: 255px;
   background: ${colors.red};
   color: ${colors.white};
   font-family: 'Lilita One', sans-serif;
@@ -121,11 +123,11 @@ export const InputGroup = styled.div`
 `
 
 export const GarcomList = styled.div`
-  width: 95%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-top: 10px;
+  margin-top: 20px;
 `
 
 export const GarcomItem = styled.div`
@@ -138,7 +140,7 @@ export const GarcomItem = styled.div`
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 
   p {
-    font-size: 18px;
+    font-size: 22px;
     color: ${colors.black};
   }
 

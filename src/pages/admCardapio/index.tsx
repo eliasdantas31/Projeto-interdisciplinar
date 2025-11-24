@@ -33,12 +33,12 @@ export const AdmCardapio = () => {
         <div>
           <CardapioOptions>
             <button>
-              Cardápio Online
+              Cardápio Local
               <i className="bi bi-caret-down-fill"></i>
             </button>
             <div>
-              <button id="cOnline">Cardapio Online</button>
-              <button id="cLocal">Cardapio Local</button>
+              <button id="cOnline">Cardápio Online</button>
+              <button id="cLocal">Cardápio Local</button>
             </div>
           </CardapioOptions>
           <NewCategory>Nova Categoria</NewCategory>
