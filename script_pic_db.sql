@@ -39,23 +39,11 @@ CREATE TABLE IF NOT EXISTS CategoryAdds (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Tables (
+    CREATE TABLE IF NOT EXISTS Orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    num INT,               
-    name VARCHAR(100)      
-);
-
-CREATE TABLE IF NOT EXISTS Orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    tableId INT NOT NULL,
+    table_or_client VARCHAR(50) NOT NULL, -- pode ser mesa ou nome do cliente
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('open','closed', 'finished') DEFAULT 'open',
-
-    CONSTRAINT fk_orders_table
-        FOREIGN KEY (tableId)
-        REFERENCES Tables(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+    status ENUM('open','closed', 'finished') DEFAULT 'open'
 );
 
 CREATE TABLE IF NOT EXISTS OrderItems (
