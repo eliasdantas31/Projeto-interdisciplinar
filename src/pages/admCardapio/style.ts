@@ -147,6 +147,79 @@ export const Category = styled.div`
   cursor: default;
 `
 
+export const CategoryPopUpContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+`
+
+export const CategoryPopUpContent = styled.form`
+  height: max-content;
+  width: 500px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: ${colors.lightGray};
+
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+  }
+
+  h3 {
+    font-family: 'Lilita One', sans-serif;
+    font-size: 30px;
+    font-weight: normal;
+    cursor: default;
+    margin-bottom: 15px;
+  }
+
+  input,
+  button {
+    height: 40px;
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 10px;
+    border: none;
+    background-color: ${colors.white};
+    color: ${colors.black};
+    font-family: 'Lilita One', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  div {
+    height: max-content;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    border-radius: 10px;
+
+    button {
+      background-color: ${colors.yellow};
+      color: ${colors.white};
+      margin: 0;
+    }
+
+    button:last-child {
+      background-color: ${colors.red};
+    }
+  }
+`
+
 export const CategoryOptions = styled.div`
   height: max-content;
   width: 100%;

@@ -164,7 +164,6 @@ export const Table = styled.div`
 `
 
 // estilização popUp novo pedido
-
 type PopUpContainerProps = {
   $show?: boolean
 }

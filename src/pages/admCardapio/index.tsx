@@ -9,7 +9,9 @@ import {
   NewCategory,
   SearchBar,
   ItemContainer,
-  Item
+  Item,
+  CategoryPopUpContainer,
+  CategoryPopUpContent
 } from './style'
 
 interface ItemType {
@@ -41,7 +43,9 @@ export const AdmCardapio = () => {
   const [showItem, setShowItem] = useState(false)
   const [newItemName, setNewItemName] = useState('')
   const [newItemPrice, setNewItemPrice] = useState('')
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null
+  )
 
   const [editItem, setEditItem] = useState<ItemType | null>(null)
   const [editItemName, setEditItemName] = useState('')
@@ -90,7 +94,8 @@ export const AdmCardapio = () => {
   }
 
   const handleCreateItem = () => {
-    if (!newItemName.trim() || !newItemPrice.trim()) return alert('Nome e preço são obrigatórios')
+    if (!newItemName.trim() || !newItemPrice.trim())
+      return alert('Nome e preço são obrigatórios')
     if (!selectedCategoryId) return
 
     const price = parseFloat(newItemPrice)
@@ -130,15 +135,18 @@ export const AdmCardapio = () => {
     const price = parseFloat(editItemPrice)
     if (isNaN(price)) return alert('Preço inválido')
 
-    fetch(`http://localhost/pic/public/index.php/categoryItem/update/${editItem.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        categoryId: editItem.categoryId,
-        name: editItemName,
-        price
-      })
-    })
+    fetch(
+      `http://localhost/pic/public/index.php/categoryItem/update/${editItem.id}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          categoryId: editItem.categoryId,
+          name: editItemName,
+          price
+        })
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         alert(data.message)
@@ -170,7 +178,9 @@ export const AdmCardapio = () => {
               <button id="cLocal">Cardápio Local</button>
             </div>
           </CardapioOptions>
-          <NewCategory onClick={() => setShowCategory(true)}>Nova Categoria</NewCategory>
+          <NewCategory onClick={() => setShowCategory(true)}>
+            Nova Categoria
+          </NewCategory>
         </div>
       </CardapioMenu>
 
@@ -192,7 +202,11 @@ export const AdmCardapio = () => {
               <div>
                 <button onClick={() => toggleCategory(cat.id)}>
                   <i
-                    className={openCategories.includes(cat.id) ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}
+                    className={
+                      openCategories.includes(cat.id)
+                        ? 'bi bi-caret-up-fill'
+                        : 'bi bi-caret-down-fill'
+                    }
                   ></i>
                 </button>
               </div>
@@ -238,17 +252,22 @@ export const AdmCardapio = () => {
 
       {/* nova categoria */}
       {showCategory && (
-        <div>
-          <h3>Criar nova categoria</h3>
-          <input
-            type="text"
-            placeholder="Nome da categoria"
-            value={newCategoryName}
-            onChange={(e) => setNewCategoryName(e.target.value)}
-          />
-          <button onClick={handleCreateCategory}>Criar</button>
-          <button onClick={() => setShowCategory(false)}>Cancelar</button>
-        </div>
+        <CategoryPopUpContainer>
+          <CategoryPopUpContent>
+            <h3>Criar nova categoria</h3>
+            <input
+              type="text"
+              placeholder="Nome da categoria"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              required
+            />
+            <div>
+              <button onClick={handleCreateCategory}>Criar</button>
+              <button onClick={() => setShowCategory(false)}>Cancelar</button>
+            </div>
+          </CategoryPopUpContent>
+        </CategoryPopUpContainer>
       )}
 
       {/* novo item */}
@@ -286,13 +305,17 @@ export const AdmCardapio = () => {
           <input
             type="text"
             value={editItemName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditItemName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEditItemName(e.target.value)
+            }
             placeholder="Nome do item"
           />
           <input
             type="number"
             value={editItemPrice}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditItemPrice(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEditItemPrice(e.target.value)
+            }
             placeholder="Preço do item"
           />
           <button onClick={salvarEdicao}>Salvar</button>
