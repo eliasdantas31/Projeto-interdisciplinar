@@ -64,7 +64,7 @@ export const AdmCardapio = () => {
           items: cat.items || [],
           adds: cat.adds || []
         }))
-        console.log("CATEGORIAS NORMALIZADAS:", normalized)
+        console.log('CATEGORIAS NORMALIZADAS:', normalized)
         setCategories(normalized)
       })
       .catch((err) => console.error(err))
@@ -160,44 +160,48 @@ export const AdmCardapio = () => {
   }
 
   const deletarCategoria = async (categoryId: number) => {
-  try {
-    const response = await fetch(`http://localhost/pic/public/index.php/category/delete/${categoryId}`, {
-      method: "DELETE"
-    })
-
-    if (!response.ok) {
-      throw new Error("Erro ao deletar categoria")
-    }
-
-    setCategories(prev => prev.filter(cat => cat.id !== categoryId))
-  } catch (err) {
-    console.error("Erro ao apagar categoria:", err)
-  }
-}
-
-const deletarItem = async (itemId: number, categoryId: number) => {
-  try {
-    const response = await fetch(`http://localhost/pic/public/index.php/categoryItem/delete/${itemId}`, {
-      method: "DELETE"
-    })
-
-    if (!response.ok) {
-      throw new Error("Erro ao deletar item")
-    }
-
-    setCategories(prev =>
-      prev.map(cat =>
-        cat.id === categoryId
-          ? { ...cat, items: cat.items.filter(item => item.id !== itemId) }
-          : cat
+    try {
+      const response = await fetch(
+        `http://localhost/pic/public/index.php/category/delete/${categoryId}`,
+        {
+          method: 'DELETE'
+        }
       )
-    )
-  } catch (err) {
-    console.error("Erro ao apagar item:", err)
+
+      if (!response.ok) {
+        throw new Error('Erro ao deletar categoria')
+      }
+
+      setCategories((prev) => prev.filter((cat) => cat.id !== categoryId))
+    } catch (err) {
+      console.error('Erro ao apagar categoria:', err)
+    }
   }
-}
 
+  const deletarItem = async (itemId: number, categoryId: number) => {
+    try {
+      const response = await fetch(
+        `http://localhost/pic/public/index.php/categoryItem/delete/${itemId}`,
+        {
+          method: 'DELETE'
+        }
+      )
 
+      if (!response.ok) {
+        throw new Error('Erro ao deletar item')
+      }
+
+      setCategories((prev) =>
+        prev.map((cat) =>
+          cat.id === categoryId
+            ? { ...cat, items: cat.items.filter((item) => item.id !== itemId) }
+            : cat
+        )
+      )
+    } catch (err) {
+      console.error('Erro ao apagar item:', err)
+    }
+  }
 
   return (
     <Container>
@@ -243,7 +247,10 @@ const deletarItem = async (itemId: number, categoryId: number) => {
               </div>
               <div>
                 <button>
-                  <i className="bi bi-trash" onClick={() => deletarCategoria(cat.id)}></i>
+                  <i
+                    className="bi bi-trash"
+                    onClick={() => deletarCategoria(cat.id)}
+                  ></i>
                 </button>
                 <button onClick={() => toggleCategory(cat.id)}>
                   <i
@@ -275,8 +282,10 @@ const deletarItem = async (itemId: number, categoryId: number) => {
                       <i className="bi bi-pencil-square"></i>
                     </button>
                     <button>
-                      <i className="bi bi-trash" onClick={() => deletarItem(item.id, cat.id)}></i>
-
+                      <i
+                        className="bi bi-trash"
+                        onClick={() => deletarItem(item.id, cat.id)}
+                      ></i>
                     </button>
                   </div>
                 </Item>

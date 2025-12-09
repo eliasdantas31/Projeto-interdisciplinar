@@ -35,7 +35,7 @@ export const AdmPedidos = () => {
           status: order.status
         }))
 
-        console.log("PEDIDOS NORMALIZADOS:", normalized)
+        console.log('PEDIDOS NORMALIZADOS:', normalized)
         setOrders(normalized)
       })
       .catch((err) => console.error('Erro ao carregar pedidos:', err))
@@ -44,7 +44,10 @@ export const AdmPedidos = () => {
   // =============================
   // UPDATE STATUS
   // =============================
-  const updateStatus = (id: number, newStatus: 'open' | 'closed' | 'finished') => {
+  const updateStatus = (
+    id: number,
+    newStatus: 'open' | 'closed' | 'finished'
+  ) => {
     fetch(`http://localhost/pic/public/index.php/orders/status/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -100,7 +103,6 @@ export const AdmPedidos = () => {
       </PedidosMenu>
 
       <PedidosContainer>
-
         {/* ====================== ABERTOS ====================== */}
         <PedidosContent className="ocupado">
           <div>
@@ -113,7 +115,8 @@ export const AdmPedidos = () => {
             {openOrders.map((order) => (
               <Item key={order.id} className="mesa-aberta">
                 <h4>
-                  <i className="bi bi-house"></i>{order.tableName}
+                  <i className="bi bi-house"></i>
+                  {order.tableName}
                 </h4>
 
                 <div className="pedidoInfo">
@@ -130,9 +133,7 @@ export const AdmPedidos = () => {
                     Fechar
                   </button>
 
-                  <button onClick={() => deleteOrder(order.id)}>
-                    Excluir
-                  </button>
+                  <button onClick={() => deleteOrder(order.id)}>Excluir</button>
                 </div>
               </Item>
             ))}
@@ -166,9 +167,7 @@ export const AdmPedidos = () => {
                     Concluir
                   </button>
 
-                  <button onClick={() => deleteOrder(order.id)}>
-                    Excluir
-                  </button>
+                  <button onClick={() => deleteOrder(order.id)}>Excluir</button>
                 </div>
               </Item>
             ))}
@@ -206,7 +205,6 @@ export const AdmPedidos = () => {
             ))}
           </ItensList>
         </PedidosContent>
-
       </PedidosContainer>
     </Container>
   )

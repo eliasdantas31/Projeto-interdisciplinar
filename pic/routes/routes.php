@@ -7,11 +7,11 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
+  http_response_code(200);
+  exit;
 }
 
-$method = $_SERVER['REQUEST_METHOD']; // <-- FALTAVA AQUI !!!
+$method = $_SERVER['REQUEST_METHOD'];
 
 // ==== IMPORTS ====
 require_once __DIR__ . '/../controllers/usersController.php';
@@ -25,6 +25,10 @@ require_once __DIR__ . '/../config/database.php';
 // ==== DB ====
 $database = new Database();
 $db = $database->getConnection();
+
+// ==== ADMIN PADRÃO ====
+$bootUser = new User($db);
+$bootUser->ensureDefaultAdmin();
 
 // ==== URL ====
 $request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -51,30 +55,30 @@ $ordersController = new OrderController($db);
 // ===========================================================
 
 if ($route === '/users' && $method === 'GET') {
-    $userController->index();
-    exit;
+  $userController->index();
+  exit;
 }
 
 if ($route === '/users/create' && $method === 'POST') {
-    $userController->create();
-    exit;
+  $userController->create();
+  exit;
 }
 
 if ($route === '/users/login' && $method === 'POST') {
-    $userController->login();
-    exit;
+  $userController->login();
+  exit;
 }
 
 if (strpos($route, '/users/show/') === 0 && $method === 'GET') {
-    $id = intval(str_replace('/users/show/', '', $route));
-    $userController->show($id);
-    exit;
+  $id = intval(str_replace('/users/show/', '', $route));
+  $userController->show($id);
+  exit;
 }
 
 if (strpos($route, '/users/delete/') === 0 && $method === 'DELETE') {
-    $id = intval(str_replace('/users/delete/', '', $route));
-    $userController->delete($id);
-    exit;
+  $id = intval(str_replace('/users/delete/', '', $route));
+  $userController->delete($id);
+  exit;
 }
 
 
@@ -84,24 +88,24 @@ if (strpos($route, '/users/delete/') === 0 && $method === 'DELETE') {
 // ===========================================================
 
 if ($route === '/category/create' && $method === 'POST') {
-    $categoryController->create();
-    exit;
+  $categoryController->create();
+  exit;
 }
 
 if ($route === '/category' && $method === 'GET') {
-    $categoryController->index();
-    exit;
+  $categoryController->index();
+  exit;
 }
 
 if ($route === '/category/menu' && $method === 'GET') {
-    $categoryController->menu();
-    exit;
+  $categoryController->menu();
+  exit;
 }
 
 if (strpos($route, '/category/delete/') === 0 && $method === 'DELETE') {
-    $id = intval(str_replace('/category/delete/', '', $route));
-    $categoryController->delete($id);
-    exit;
+  $id = intval(str_replace('/category/delete/', '', $route));
+  $categoryController->delete($id);
+  exit;
 }
 
 
@@ -112,31 +116,31 @@ if (strpos($route, '/category/delete/') === 0 && $method === 'DELETE') {
 // ===========================================================
 
 if ($route === '/categoryItem/create' && $method === 'POST') {
-    $categoryItemController->create();
-    exit;
+  $categoryItemController->create();
+  exit;
 }
 
 if ($route === '/categoryItem' && $method === 'GET') {
-    $categoryItemController->index();
-    exit;
+  $categoryItemController->index();
+  exit;
 }
 
 if (strpos($route, '/categoryItem/update/') === 0 && $method === 'PUT') {
-    $id = intval(str_replace('/categoryItem/update/', '', $route));
-    $categoryItemController->update($id);
-    exit;
+  $id = intval(str_replace('/categoryItem/update/', '', $route));
+  $categoryItemController->update($id);
+  exit;
 }
 
 if (strpos($route, '/categoryItem/delete/') === 0 && $method === 'DELETE') {
-    $id = intval(str_replace('/categoryItem/delete/', '', $route));
-    $categoryItemController->delete($id);
-    exit;
+  $id = intval(str_replace('/categoryItem/delete/', '', $route));
+  $categoryItemController->delete($id);
+  exit;
 }
 
 if (strpos($route, '/categoryItem/show/') === 0 && $method === 'GET') {
-    $id = intval(str_replace('/categoryItem/show/', '', $route));
-    $categoryItemController->show($id);
-    exit;
+  $id = intval(str_replace('/categoryItem/show/', '', $route));
+  $categoryItemController->show($id);
+  exit;
 }
 
 // ===========================================================
@@ -144,13 +148,13 @@ if (strpos($route, '/categoryItem/show/') === 0 && $method === 'GET') {
 // ===========================================================
 
 if ($route === '/categoryAdds/create' && $method === 'POST') {
-    $categoryAddController->create();
-    exit;
+  $categoryAddController->create();
+  exit;
 }
 
 if ($route === '/categoryAdds' && $method === 'GET') {
-    $categoryAddController->index();
-    exit;
+  $categoryAddController->index();
+  exit;
 }
 
 // ===========================================================
@@ -158,25 +162,25 @@ if ($route === '/categoryAdds' && $method === 'GET') {
 // ===========================================================
 
 if ($route === '/tables' && $method === 'GET') {
-    $tablesController->index();
-    exit;
+  $tablesController->index();
+  exit;
 }
 
 if ($route === '/tables/create' && $method === 'POST') {
-    $tablesController->create();
-    exit;
+  $tablesController->create();
+  exit;
 }
 
 if (strpos($route, '/tables/delete/') === 0 && $method === 'DELETE') {
-    $id = intval(str_replace('/tables/delete/', '', $route));
-    $tablesController->delete($id);
-    exit;
+  $id = intval(str_replace('/tables/delete/', '', $route));
+  $tablesController->delete($id);
+  exit;
 }
 
 if (strpos($route, '/tables/show/') === 0 && $method === 'GET') {
-    $id = intval(str_replace('/tables/show/', '', $route));
-    $tablesController->show($id);
-    exit;
+  $id = intval(str_replace('/tables/show/', '', $route));
+  $tablesController->show($id);
+  exit;
 }
 
 
@@ -185,34 +189,32 @@ if (strpos($route, '/tables/show/') === 0 && $method === 'GET') {
 // ===========================================================
 
 if ($route === '/orders' && $method === 'GET') {
-    $ordersController->getAll();
-    exit;
+  $ordersController->getAll();
+  exit;
 }
 
 if ($route === '/orders/create' && $method === 'POST') {
-    $ordersController->create();
-    exit;
+  $ordersController->create();
+  exit;
 }
 
 if (strpos($route, '/orders/show/') === 0 && $method === 'GET') {
-    $id = intval(str_replace('/orders/show/', '', $route));
-    $ordersController->getById($id);
-    exit;
+  $id = intval(str_replace('/orders/show/', '', $route));
+  $ordersController->getById($id);
+  exit;
 }
 
 if (strpos($route, '/orders/status/') === 0 && $method === 'PATCH') {
-    $id = intval(str_replace('/orders/status/', '', $route));
-    $ordersController->updateStatus($id);
-    exit;
+  $id = intval(str_replace('/orders/status/', '', $route));
+  $ordersController->updateStatus($id);
+  exit;
 }
 
 if (strpos($route, '/orders/delete/') === 0 && $method === 'DELETE') {
-    $id = intval(str_replace('/orders/delete/', '', $route));
-    $ordersController->delete($id);
-    exit;
+  $id = intval(str_replace('/orders/delete/', '', $route));
+  $ordersController->delete($id);
+  exit;
 }
-
-
 
 // ===========================================================
 // 404
