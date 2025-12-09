@@ -92,13 +92,13 @@ class User
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
+  // ===============================
+  // GARANTIR ADMIN PADRÃO
+  // ===============================
   public function ensureDefaultAdmin()
   {
-    // Definição do admin padrão
-    $defaultEmail = 'admin@admin.com';
-    $defaultPassword = 'admin123';
-
-    $sql = "SELECT id FROM {$this->table} WHERE admin = 1 LIMIT 1";
+    // Verifica se já existe algum admin (admin = 'Y')
+    $sql = "SELECT id FROM {$this->table} WHERE admin = 'Y' LIMIT 1";
     $stmt = $this->conn->prepare($sql);
     $stmt->execute();
 
@@ -108,9 +108,13 @@ class User
       return;
     }
 
+    // Não existe admin -> criar admin padrão
+    $defaultEmail = 'admin@admin.com';
+    $defaultPassword = 'admin123';
+
     $this->email = $defaultEmail;
     $this->password = password_hash($defaultPassword, PASSWORD_DEFAULT);
-    $this->admin = 1;
+    $this->admin = 'Y';
 
     $this->create();
   }

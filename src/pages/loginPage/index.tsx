@@ -19,6 +19,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault() // impede o refresh da página
+    setError('') // limpa erro anterior
 
     //usuario teste admin
     //admin@admin.com / admin123
@@ -38,8 +39,11 @@ const Login = () => {
       const result = await response.json()
       console.log('Console.log result', result)
 
-      if (!result.user) {
-        setError(result.message || 'Usuário ou senha incorretos')
+      // Se o backend retornou status de erro (400, 401, 500, etc) ou não tem user
+      if (!response.ok || !result.user) {
+        const msg = result.message || 'Usuário ou senha incorretos'
+        setError(msg)
+        alert(msg) // ALERTA DE ERRO
         return
       }
 
@@ -52,7 +56,9 @@ const Login = () => {
       }
     } catch (err) {
       console.error(err)
-      setError('Erro ao conectar com o servidor')
+      const msg = 'Erro ao conectar com o servidor'
+      setError(msg)
+      alert(msg) // ALERTA DE ERRO DE CONEXÃO
     }
   }
 
@@ -86,6 +92,12 @@ const Login = () => {
 
           <LoginButton type="submit">Entrar</LoginButton>
           <a href="#">Forgot password?</a>
+
+          {error && (
+            <p style={{ color: 'red', marginTop: '12px', fontSize: '14px' }}>
+              {error}
+            </p>
+          )}
         </form>
       </LoginContainer>
     </LoginBackground>
