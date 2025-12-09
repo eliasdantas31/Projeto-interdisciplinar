@@ -27,12 +27,12 @@ export const GarcomPage = () => {
   // ============================================================
   const fetchOrders = () => {
     fetch('http://localhost/pic/public/index.php/orders')
-      .then(res => res.json())
-      .then(data => {
-        console.log("ORDERS RECEBIDAS:", data)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('ORDERS RECEBIDAS:', data)
         setOrders(data) // já vem com table_number e status do backend
       })
-      .catch(err => console.error("FETCH ERROR:", err))
+      .catch((err) => console.error('FETCH ERROR:', err))
   }
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const GarcomPage = () => {
   // ============================================================
   const handleAdicionar = () => {
     if (!tableNumber) {
-      alert("Informe o número ou nome da mesa.")
+      alert('Informe o número ou nome da mesa.')
       return
     }
 
@@ -53,15 +53,15 @@ export const GarcomPage = () => {
       observation: observation
     }
 
-    console.log("Payload que será enviado:", payload)
+    console.log('Payload que será enviado:', payload)
 
     fetch('http://localhost/pic/public/index.php/orders/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
-      .then(res => res.json())
-      .then(response => {
+      .then((res) => res.json())
+      .then((response) => {
         console.log('Novo pedido criado:', response)
 
         // Reset form e fechar popup
@@ -72,7 +72,7 @@ export const GarcomPage = () => {
         // Atualizar lista de pedidos
         //fetchOrders()
       })
-      .catch(err => console.error("ERRO AO CRIAR PEDIDO:", err))
+      .catch((err) => console.error('ERRO AO CRIAR PEDIDO:', err))
   }
 
   const handleExibir = (orderId: number) => {
@@ -103,7 +103,7 @@ export const GarcomPage = () => {
         <TablesContainer>
           {orders.length === 0 && <p>Nenhum pedido encontrado.</p>}
 
-          {orders.map(order => (
+          {orders.map((order) => (
             <Table key={order.id}>
               <h3>{order.table_or_client}</h3>
               <button onClick={() => handleExibir(order.id)}>EXIBIR</button>
