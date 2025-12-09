@@ -1,16 +1,5 @@
 <?php
 
-// ==== CORS ====
-header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Access-Control-Allow-Credentials: true");
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
 $method = $_SERVER['REQUEST_METHOD']; // <-- FALTAVA AQUI !!!
 
 // ==== IMPORTS ====
@@ -26,10 +15,6 @@ require_once __DIR__ . '/../config/database.php';
 $database = new Database();
 $db = $database->getConnection();
 
-// ==== ADMIN PADRÃO ====
-$bootUser = new User($db);
-$bootUser->ensureDefaultAdmin();
-
 // ==== URL ====
 $request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -40,7 +25,6 @@ $route = str_replace('/index.php', '', $route);
 
 $route = '/' . ltrim($route, '/');
 
-
 // ==== CONTROLLERS ====
 $userController = new UserController($db);
 $categoryController = new CategoryController($db);
@@ -48,7 +32,6 @@ $categoryItemController = new CategoryItemController($db);
 $categoryAddController = new CategoryAddsController($db);
 $tablesController = new TablesController($db);
 $ordersController = new OrderController($db);
-
 
 // ===========================================================
 // USERS
@@ -81,8 +64,6 @@ if (strpos($route, '/users/delete/') === 0 && $method === 'DELETE') {
   exit;
 }
 
-
-
 // ===========================================================
 // CATEGORY
 // ===========================================================
@@ -107,9 +88,6 @@ if (strpos($route, '/category/delete/') === 0 && $method === 'DELETE') {
   $categoryController->delete($id);
   exit;
 }
-
-
-
 
 // ===========================================================
 // CATEGORY ITEM
@@ -182,7 +160,6 @@ if (strpos($route, '/tables/show/') === 0 && $method === 'GET') {
   $tablesController->show($id);
   exit;
 }
-
 
 // ===========================================================
 // ORDERS

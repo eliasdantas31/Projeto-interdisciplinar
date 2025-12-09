@@ -40,7 +40,11 @@ export const AdmGarcom = () => {
     fetch('http://localhost/pic/public/index.php/users/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: senha })
+      body: JSON.stringify({
+        email,
+        password: senha,
+        admin: 'N'
+      })
     })
       .then((res) => {
         if (!res.ok) throw new Error('Erro ao adicionar garçom')
